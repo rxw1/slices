@@ -15,8 +15,8 @@ const sidx = {
 
 let r = require('rethinkdbdash')({db: config.db});
 
-function init() {
-  return function* init() {
+function run() {
+  return function* run() {
     try {
 
       // drop database if it already exists
@@ -79,5 +79,5 @@ function* insertSlice(slice, next) {
 }
 
 module.exports = {
-  init: init // create database and tables, populate w/ data
+  run: run // create database and tables, populate w/ data
 };

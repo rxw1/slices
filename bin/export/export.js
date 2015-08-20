@@ -1,6 +1,6 @@
 'use strict';
 
-require('babel/polyfill');
+require('babel-core/polyfill');
 
 let rethinkdbdash = require('rethinkdbdash');
 let r = rethinkdbdash({db: 'bidos'});
