@@ -50,7 +50,7 @@ export function selectSlice(sliceID) {
   return dispatch => {
     dispatch(makeSelected(sliceID));
     dispatch(requestReferences(sliceID));
-    return get(`/api/slices/${sliceID}`)
+    return get(`/api/slices/${sliceID}/refs`)
       .then(result => dispatch(receiveReferences(result)));
   }
 }
