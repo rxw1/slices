@@ -3,6 +3,10 @@
 let _ = require('lodash');
 let fs = require('co-fs');
 let path = require('path');
+let Promise = require('bluebird');
+
+var FileQueue = require('filequeue');
+var fq = new FileQueue(100);
 
 const config = {
   db: 'slices',
@@ -15,6 +19,23 @@ const sidx = {
 };
 
 let r = require('rethinkdbdash')({db: config.db});
+
+// function readDir() {
+//   function *(next) {
+//     yield fs.readdir(path.join(__dirname, 'slices'));
+//   }
+// }
+
+// function handleFiles() {
+//   return function*() {
+//     fs.readdir(path.join(__dirname, 'slices'), function(err, files) {
+//       return files.map(function(file) {
+//         let json = fs.readFile(path.join(__dirname, 'slices', file), {encoding: 'utf8'});
+//         return JSON.parse(json);
+//       });
+//     });
+//   }
+// }
 
 function run() {
   return function* run() {
@@ -49,23 +70,31 @@ function run() {
       _.each(sidx, function(values, key) {
         _.each(values).map(function(value) {
           secondaryIndices.push(r.table(key).indexCreate(value));
-          console.log(`created secondary index: ${key} ${value}`);
+          console.log(`created secondary index on ${key}: ${value}`);
           // secondaryIndices.push(r.table(key).indexWait(value));
         });
       });
 
       yield secondaryIndices;
 
-      let files = yield fs.readdir(path.join(__dirname, 'slices'));
+      console.log('reading files...');
+      // let slices = yield handleFiles();
+      // console.log('slices count', slices.length);
 
-      let slices = yield files.map(function *(file) {
+      let files = yield fs.readdir(path.join(__dirname, 'slices'));
+      console.log('files count:', files.length);
+
+      let lessFiles = files.slice(0, 8000); // FIXME
+
+      let slices = yield lessFiles.map(function *(file) {
         let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
         return JSON.parse(slice);
       })
 
       let result = yield r.table('slices').insert(slices);
-
+      console.log('done');
       this.body = result;
+      // this.status = 200;
 
     } catch(err) {
       throw (err);
@@ -73,11 +102,15 @@ function run() {
   };
 }
 
-function* insertSlice(slice, next) {
-  try {
-    let result = yield r.table('slices').insert(slice);
-  } catch(err) {
-    console.log(err.message);
+function insertSlice(file) {
+  return function* () {
+    try {
+      let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
+      let result = yield r.table('slices').insert(slice);
+      console.log(result);
+    } catch(err) {
+      console.log(err.message);
+    }
   }
 }
 
