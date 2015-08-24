@@ -10,8 +10,8 @@ const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
 
 new WebpackDevServer(webpack(config), {
-  noInfo: true,
-  quiet: true,
+  noInfo: false,
+  quiet: false,
   publicPath: config.output.publicPath,
   hot: true,
   historyApiFallback: true,
