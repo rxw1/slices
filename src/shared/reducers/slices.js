@@ -4,10 +4,13 @@ import {
   SELECT_SLICE
 } from '../actions/types';
 
-export default function slices(state = [], action) {
+import uniq from 'lodash/array/uniq';
+import sort from 'lodash/collection/sortBy';
+
+export function slices(state = [], action) {
   switch (action.type) {
     case RECEIVE_SLICES:
-      return [...state, ...action.payload];
+      return uniq([...state, ...action.payload], 'sliceID');
     default:
       return state;
   }
