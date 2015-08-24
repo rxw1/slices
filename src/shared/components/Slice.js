@@ -58,6 +58,8 @@ export default class Slice extends Component {
         identifier = use.usedName.valueName.identifier;
       } else if (use.usedName.hasOwnProperty('typeName')) {
         identifier = use.usedName.typeName.identifier;
+      } else if (use.usedName.hasOwnProperty('constructorName')) {
+        identifier = use.usedName.constructorName.identifier;
       } else {
         identifier = JSON.stringify(use.usedName);
         // identifier = `${use.usedName.constructorTypeName.identifier}/${use.usedName.constructorName.identifier}`;
