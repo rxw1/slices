@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Slices from '../components/Slices';
 import Layout from '../components/Layout/Layout';
 import * as actions from '../actions/types';
+import * as SlicesActions from '../actions/slices';
 
 class App extends Component {
   constructor(props) {
@@ -11,22 +11,17 @@ class App extends Component {
   }
 
   render() {
-    const { location, children, slices } = this.props;
+    const { children, location, ...other } = this.props;
     const { pathname } = location;
     const value = pathname.substring(1);
 
     return (
-      <Layout>
-        <Slices slices={slices}>
-        </Slices>
+      <Layout value={value} {...other}>
+        {children}
       </Layout>
     );
   }
 }
-
-App.propTypes = {
-  slices: PropTypes.array.isRequired
-};
 
 App.contextTypes = {
   router: PropTypes.object.isRequired
@@ -34,12 +29,14 @@ App.contextTypes = {
 
 function mapStateToProps(state) {
   return {
-    slices: state.slices
+    slices: state.slices,
+    selected: state.selected,
+    references: state.references
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actions, dispatch);
+  return bindActionCreators(SlicesActions, dispatch);
 }
 
 export default connect(
