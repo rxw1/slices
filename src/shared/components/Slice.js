@@ -30,7 +30,6 @@ export default class Slice extends Component {
   }
 
   selectSlice(sliceID) {
-    console.log(sliceID);
     this.props.selectSlice(sliceID);
   }
 
@@ -84,7 +83,7 @@ export default class Slice extends Component {
       <div style={styles.slice}>
 
         <h4 onClick={this.selectSlice.bind(null, sliceID)}>
-          {sliceID}
+          <Link to={`/slices/${sliceID}`}>{sliceID}</Link>
         </h4>
 
         <div style={styles.fragment}>

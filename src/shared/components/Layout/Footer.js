@@ -19,6 +19,7 @@ export default class Footer extends Component {
           <ul className="mdl-mini-footer__link-list">
             <li>{slicesCount} slices</li>
             <li><Link to='#'>download</Link></li>
+            <li><Link to='http://www.github.com/rwilhelm/slices'>github</Link></li>
           </ul>
         </div>
       </footer>

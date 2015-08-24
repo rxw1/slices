@@ -7,17 +7,10 @@ import Slice from '../components/Slice';
 export default class Slices extends Component {
   render() {
     const { slices } = this.props;
-    let content;
-    if (slices) {
-      content = slices.map((slice, idx) => {
-        return <Slice key={idx} {...slice} />;
-      })
-    } else {
-      content = 'UH OH NO SLICES :('
-    }
     return (
       <pre>
-        {content}
+        {slices.map(slice =>
+          (<Slice key={slice.sliceID} {...slice} />))}
       </pre>
     );
   }

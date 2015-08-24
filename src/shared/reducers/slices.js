@@ -35,7 +35,7 @@ export function references(state = [], action) {
 export function selected(state = [], action) {
 	switch (action.type) {
 		case SELECT_SLICE:
-			return [/*...state, */action.payload];
+			return [action.payload];
 		default:
 			return state;
 	}

@@ -6,7 +6,6 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sampleSlices } = this.props;
     const { selected, sampleSlices, cropSelectedSlice } = this.props;
     return (
       <header className='mdl-layout__header'>
