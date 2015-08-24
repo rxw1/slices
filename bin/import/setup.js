@@ -10,7 +10,7 @@ const config = {
 };
 
 const sidx = {
-  slices: ['sliceID', 'otherSlice'],
+  slices: ['otherSlice']
 };
 
 let r = require('rethinkdbdash')({db: config.db});
@@ -37,7 +37,9 @@ function run() {
 
       // create missing tables
       yield _.map(missingTables, function(table) {
-        return r.tableCreate(table);
+        return r.tableCreate(table, {
+          primaryKey: 'sliceID'
+        });
         console.log(`created table: ${table}`);
       });
 
