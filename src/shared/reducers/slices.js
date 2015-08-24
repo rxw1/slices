@@ -11,6 +11,8 @@ export function slices(state = [], action) {
   switch (action.type) {
     case RECEIVE_SLICES:
       return uniq([...state, ...action.payload], 'sliceID');
+		case RECEIVE_REFERENCES:
+      return uniq([...state, ...action.payload], 'sliceID');
     default:
       return state;
   }
@@ -19,7 +21,7 @@ export function slices(state = [], action) {
 export function references(state = [], action) {
 	switch (action.type) {
 		case RECEIVE_REFERENCES:
-			return [...action.payload];
+			return action.payload.map(reference => reference.sliceID);
 		default:
 			return state;
 	}
@@ -28,7 +30,7 @@ export function references(state = [], action) {
 export function selected(state = [], action) {
 	switch (action.type) {
 		case SELECT_SLICE:
-			return [...state, action.payload];
+			return [/*...state, */action.payload];
 		default:
 			return state;
 	}
