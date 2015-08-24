@@ -4,6 +4,7 @@ import StyleSheet from 'react-style';
 var languagesStyle = StyleSheet.create({
   'listStyleType': 'none'
 });
+import * as actions from '../actions/types';
 
 export default class Slices extends Component {
   render() {

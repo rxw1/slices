@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Slices from '../components/Slices';
 import Layout from '../components/Layout/Layout';
-import * as actions from '../actions';
+import * as actions from '../actions/types';
 
 class App extends Component {
   constructor(props) {
