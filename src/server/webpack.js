@@ -11,7 +11,7 @@ const port = parseInt(process.env.PORT) + 1 || 3001;
 
 new WebpackDevServer(webpack(config), {
   noInfo: true,
-  quiet: false,
+  quiet: true,
   publicPath: config.output.publicPath,
   hot: true,
   historyApiFallback: true,
