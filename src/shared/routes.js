@@ -1,10 +1,13 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 import App from './containers/App';
-import Layout from './components/Layout';
+import Slices from './components/Slices';
+import Slice from './components/Slice';
 
 export default (
-  <Route component={Layout}>
-  	<Route name='home' path='/' component={App} />
-  </Route>
+	<Route path='/' component={App}>
+		<Route path='slices' component={Slices} />
+		<Route path='slices/:sliceID' component={Slices} />
+		<Redirect from='/' to='/slices' />
+	</Route>
 )
