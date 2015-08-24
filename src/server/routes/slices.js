@@ -9,7 +9,7 @@ import { getSlice, sampleSlices } from '../middleware/slices';
 
 router
 
-  // get a single slice including all references
+  // get a single slice
   .get('/api/slices/:sliceID/n', function* (next) {
     if (!this.params.sliceID) return;
     const sliceIDs = [parseInt(this.params.sliceID)];
@@ -17,7 +17,8 @@ router
     _.remove(slices, {sliceID: parseInt(this.params.sliceID)})
     this.body = slices;
   })
-  // get a single slice including all references
+
+  // get all references only
   .get('/api/slices/:sliceID/refs', function* (next) {
     if (!this.params.sliceID) return;
     const sliceIDs = [parseInt(this.params.sliceID)];
@@ -26,17 +27,15 @@ router
     this.body = slices;
   })
 
-  // get a single slice including all references
+  // get a slice including all references
   .get('/api/slices/:sliceID', function* (next) {
     if (!this.params.sliceID) return;
     const sliceIDs = [parseInt(this.params.sliceID)];
-    const slices = yield getSlice(sliceIDs);
-    this.body = slices;
+    this.body = yield getSlice(sliceIDs);
   })
 
   // get a sample of n slices
   .get('/api/slices', function* () {
-    const slices = yield sampleSlices();
     this.body = yield sampleSlices();
   })
 
