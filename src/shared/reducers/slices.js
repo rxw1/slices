@@ -25,12 +25,10 @@ export function references(state = [], action) {
 	}
 }
 
-export function selected(state = {}, action) {
+export function selected(state = [], action) {
 	switch (action.type) {
 		case SELECT_SLICE:
-			debugger
-			// return [...action.payload]
-			return Object.assign({}, action.payload);
+			return [...state, action.payload];
 		default:
 			return state;
 	}

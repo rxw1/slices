@@ -65,7 +65,7 @@ export default class Slice extends Component {
 
       if (use.reference.hasOwnProperty('otherSlice')) {
         return (<li key={use.reference} style={styles.li}>
-          <Link to={`/{slices}/${use.reference}`}>{identifier}</Link>
+          <Link to={`/slices/${use.reference.otherSlice}`}>{identifier}</Link>
         </li>);
       } else {
         return (<li key={use.reference} style={styles.li}>
