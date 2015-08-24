@@ -7,3 +7,4 @@ coverage
 _book
 public
 bin/db-setup/slices
+bin/import/slices

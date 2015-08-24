@@ -9,6 +9,7 @@ const config = {
   tables: ['slices']
 };
 
+// secondary indices
 const sidx = {
   slices: ['otherSlice']
 };

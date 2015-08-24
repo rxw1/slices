@@ -3,11 +3,7 @@ global.__SERVER__ = false;
 
 import 'babel-core/polyfill';
 
-// import 'material-design-lite/src/material-design-lite.scss';
-// import 'material-design-lite/material.min.js';
-
 import React from 'react';
-import Root from '../shared/containers/Root';
 import { history } from 'react-router/lib/BrowserHistory';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';

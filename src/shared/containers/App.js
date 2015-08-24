@@ -30,6 +30,7 @@ App.contextTypes = {
 function mapStateToProps(state) {
   return {
     slices: state.slices,
+    languages: state.languages,
     selected: state.selected,
     references: state.references
   };
