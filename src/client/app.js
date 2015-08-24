@@ -13,6 +13,9 @@ import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 import routes from '../shared/routes';
 
+// React components for Redux DevTools
+import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+
 import configureStore from '../shared/store/configureStore';
 const store = configureStore(window.__initialState);
 
@@ -29,6 +32,9 @@ React.render(
 		<Provider store={store}>
       {() => renderRouter()}
 		</Provider>
+    <DebugPanel top right bottom>
+      <DevTools store={store} monitor={LogMonitor} />
+    </DebugPanel>
 	</div>,
   document.getElementById('root')
 );
