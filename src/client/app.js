@@ -10,7 +10,7 @@ import React from 'react';
 import Root from '../shared/containers/Root';
 import { history } from 'react-router/lib/BrowserHistory';
 import { Provider } from 'react-redux';
-import { Router, Route } from 'react-router';
+import { Router } from 'react-router';
 import routes from '../shared/routes';
 
 // React components for Redux DevTools
