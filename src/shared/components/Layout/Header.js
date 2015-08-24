@@ -1,26 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Header extends Component {
-
-  constructor() {
-    super();
-    this.handleSampleSlices = this.handleSampleSlices.bind(this);
-  }
-
-  handleSampleSlices() {
-    this.props.sampleSlices();
+  constructor(props) {
+    super(props);
   }
 
   render() {
-    // const { children } = this.props;
+    const { sampleSlices } = this.props;
     return (
       <header className='mdl-layout__header'>
         <div className='mdl-layout__header-row'>
-          <span className='mdl-layout-title'>Slices</span>
-          <div className='mdl-layout-spacer'></div>
+          <span className='mdl-layout-title'>{this.props.value}</span>
           <nav className='mdl-navigation'>
-            <a className='mdl-navigation__link' onClick={this.handleSampleSlices}>Andere laden</a>
+            <a className='mdl-navigation__link' onClick={sampleSlices}>sample</a>
           </nav>
+          <div className='mdl-layout-spacer'></div>
         </div>
       </header>
     );
@@ -28,6 +22,5 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  // children: PropTypes.any
+  sampleSlices: PropTypes.func.isRequired
 }
-

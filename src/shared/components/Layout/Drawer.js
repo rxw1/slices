@@ -1,6 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 
-export default class Drawer {
+export default class Drawer extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const languages = this.props.languages.map((language, idx) => {
       return (
@@ -10,13 +14,7 @@ export default class Drawer {
 
     return (
       <div className='mdl-layout__drawer'>
-        <span className='mdl-layout-title'>Title</span>
-        <nav className='mdl-navigation'>
-          <a className='mdl-navigation__link'>Link</a>
-          <a className='mdl-navigation__link'>Link</a>
-          <a className='mdl-navigation__link'>Link</a>
-          <a className='mdl-navigation__link'>Link</a>
-        </nav>
+        <span className='mdl-layout-title'>Slices</span>
         <span className='mdl-layout-title'><small>Languages</small></span>
         <nav className='mdl-navigation'>{languages}</nav>
       </div>
@@ -25,6 +23,5 @@ export default class Drawer {
 }
 
 Drawer.propTypes = {
-  children: PropTypes.any
   languages: PropTypes.array.isRequired
 }
