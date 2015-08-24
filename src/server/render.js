@@ -14,7 +14,7 @@ export default function render() {
     const location = new Location(this.request.path, this.request.query);
     const store = configureStore();
 
-    // yield store.dispatch(fetchLanguages());
+    yield store.dispatch(fetchLanguages());
 
     this.body = yield new Promise(resolve => {
       Router.run(routes, location, (error, initialRouterState, transition) => {
