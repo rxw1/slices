@@ -1,11 +1,11 @@
 'use strict';
 
 let app = require('koa')();
-let db = require('./db');
+let setup = require('./setup');
 
 const port = process.env.PORT || 3005;
 
-app.use(db.init());
+app.use(setup.run());
 
 app.listen(port, function() {
 	console.log(`localhost:${port} started`);
