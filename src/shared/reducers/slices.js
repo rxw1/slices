@@ -1,7 +1,8 @@
 import {
   RECEIVE_SLICES,
   RECEIVE_REFERENCES,
-  SELECT_SLICE
+  SELECT_SLICE,
+  CROP_SELECTED_SLICE
 } from '../actions/types';
 
 import uniq from 'lodash/array/uniq';
@@ -13,6 +14,10 @@ export function slices(state = [], action) {
       return uniq([...state, ...action.payload], 'sliceID');
 		case RECEIVE_REFERENCES:
       return uniq([...state, ...action.payload], 'sliceID');
+		case CROP_SELECTED_SLICE:
+			debugger
+			let newState = state.filter(slice => slice.sliceID === action.sliceID);
+			return [...newState];
     default:
       return state;
   }

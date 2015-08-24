@@ -7,6 +7,7 @@ import {
   RECEIVE_REFERENCES,
   FETCH_REFERENCES,
   SAMPLE_SLICES,
+  CROP_SELECTED_SLICE
 } from './types';
 
 function receiveSlices(payload) {
@@ -60,5 +61,12 @@ export function sampleSlices() {
     dispatch(requestSlices());
     return get('/api/slices')
       .then(result => dispatch(receiveSlices(result)));
+  }
+}
+
+export function cropSelectedSlice(sliceID) {
+  return {
+    type: CROP_SELECTED_SLICE,
+    sliceID: sliceID
   }
 }
