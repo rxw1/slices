@@ -11,9 +11,12 @@ const logger = createLogger({
 	collapsed: true,
 	// predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
 });
-let middleware = [logger, thunk];
 
-// middleware.push(logger);
+let middleware = [thunk];
+
+if (global.hasOwnProperty('window')) {
+	middleware.push(logger);
+}
 
 const createStoreWithMiddleware = compose(
 	applyMiddleware(...middleware),
