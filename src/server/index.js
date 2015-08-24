@@ -27,6 +27,9 @@ app.use(helmet());
 import compress from 'koa-compress';
 app.use(compress());
 
+import favicon from 'koa-favicon';
+app.use(favicon());
+
 import api from './api';
 app.use(api());
 
