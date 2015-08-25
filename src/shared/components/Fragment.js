@@ -39,9 +39,11 @@ export default class Fragment extends Component {
     });
 
     return (
-      <Highlight style={styles.fragment}>
-        {fragment}
-      </Highlight>
+      <div>
+        <Highlight style={styles.fragment} className='haskell'>
+          {fragment}
+        </Highlight>
+      </div>
     );
   }
 }
