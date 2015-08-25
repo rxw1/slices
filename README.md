@@ -1,18 +1,33 @@
 ### Work in progress. Not usable for work, just for play.
 
-First make sure you have RethinkDB set up and you've got some slices in `bin/import/slices`.
+Install dependencies first.
+
+```shell
+npm install
+```
+
+Then make sure you have RethinkDB set up and running. Put some slices into `bin/import/slices`, startup the import server and trigger it:
 
 ```shell
 npm install
 node bin/import
 curl localhost:3005
 ```
+
 After the import is done, just kill the import server and start the actual app:
 
 ```shell
 npm run dev
 ```
-If things went well, the app should be running at `localhost:3000/slices`.
+
+If things went well, this thing should be running at `localhost:3000/slices`.
+
+### How to play
+
+1. Click the `sample` button. Three random slices will be fetched and displayed.
+2. Click on some code fragment. All its referenced slices will be fetched and displayed.
+3. Click the `slices` button to go back. The browser's back button should work as well.
+4. Repeat.
 
 ### props to stuff
 
