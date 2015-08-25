@@ -36,4 +36,10 @@ If things went well, this thing should be running at `localhost:3000/slices`.
 * RethinkDB + Elasticsearch
 * Koa
 * Material Design Lite
-* ES7
+* ES7 w/ Babel
+* Webpack
+* Universal/Server side rendering
+
+### Thank you
+
+This project is somehow based on [khtdr's Isomorphic port of the redux counter app](https://github.com/khtdr/redux-react-koa-isomorphic-counter-example) and the [official Redux examples](https://github.com/rackt/redux/tree/master/examples).
