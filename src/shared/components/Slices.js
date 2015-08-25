@@ -3,14 +3,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/slices';
 import Slice from '../components/Slice';
+import Card from '../components/Layout/Card';
+import Fragment from '../components/Fragment';
 
 export default class Slices extends Component {
   render() {
     const { slices } = this.props;
     return (
       <pre>
-        {slices.map(slice =>
-          (<Slice key={slice.sliceID} {...slice} />))}
+        {slices.map((slice, idx) => (
+          <Card key={slice.sliceID} header={slice.sliceID} selectSlice={this.props.selectSlice} sliceID={slice.sliceID}>
+            <Fragment fragment={slice.fragment} />
+          </Card>
+        ))}
       </pre>
     );
   }
