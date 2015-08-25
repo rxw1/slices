@@ -15,9 +15,7 @@ export function slices(state = [], action) {
 		case RECEIVE_REFERENCES:
       return uniq([...state, ...action.payload], 'sliceID');
 		case CROP_SELECTED_SLICE:
-			debugger
-			let newState = state.filter(slice => slice.sliceID === action.sliceID);
-			return [...newState];
+			return [...state.filter(slice => slice.sliceID === action.sliceID)];
     default:
       return state;
   }
