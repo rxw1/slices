@@ -20,7 +20,7 @@ After the import is done, just kill the import server and start the actual app:
 npm run dev
 ```
 
-If things went well, this thing should be running at `localhost:3000/slices`.
+If things went well, the client should be reachable at `localhost:3000/slices`. You can query the API on e.g. `localhost:3000/api/slices`. See [src/server/routes/slices.js](https://github.com/rwilhelm/slices/blob/master/src/server/routes/slices.js) for some of the available routes.
 
 ### How to play
 
