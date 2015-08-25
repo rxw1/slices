@@ -1,5 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Header, Drawer, Content, Footer } from '.';
+import StyleSheet from 'react-style';
+
+var styles = StyleSheet.create({
+  layout: {
+    backgroundColor: '#D2CCC6',
+  }
+});
 
 export default class Layout extends Component {
   constructor(props) {
@@ -9,7 +16,7 @@ export default class Layout extends Component {
   render() {
     const { children, ...other } = this.props;
     return (
-      <div className='mdl-layout mdl-js-layout mdl-layout--fixed-header'>
+      <div style={styles.layout} className='mdl-layout mdl-js-layout mdl-layout--fixed-header'>
         <Header {...other} />
         <Drawer {...other} />
         <Content {...other}>
@@ -19,6 +26,10 @@ export default class Layout extends Component {
       </div>
     );
   }
+}
+
+Layout.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 Layout.propTypes = {
