@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/types';
+import * as actions from '../actions/slices';
 import Slice from '../components/Slice';
 import Fragment from '../components/Fragment';
 import _ from 'lodash';
