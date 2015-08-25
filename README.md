@@ -29,7 +29,7 @@ If things went well, this thing should be running at `localhost:3000/slices`.
 3. Click the `slices` button to go back. The browser's back button should work as well.
 4. Repeat.
 
-### props to stuff
+### Used stuff
 
 * Redux + Redux Devtools
 * React + React Router
