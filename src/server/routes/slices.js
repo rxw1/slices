@@ -5,7 +5,9 @@ import _ from 'lodash';
 import Router from 'koa-router';
 let router = new Router();
 
-import { getSlice, sampleSlices } from '../middleware/slices';
+import { getSlices, sampleSlices } from '../middleware/slices';
+import { tarSlices } from '../middleware/tar.gz';
+
 import insert from '../middleware/insert';
 
 router
@@ -38,6 +40,19 @@ router
   // get a sample of n slices
   .get('/api/slices', function* () {
     this.body = yield sampleSlices();
+  })
+
+  // get a tarball containing a slice and its references
+  .get('/api/slices/:sliceID/tar', function* () {
+    const sliceID = parseInt(this.params.sliceID);
+    console.log(`preparing package for ${sliceID}...`);
+    const sliceIDs = [sliceID];
+    const slices = yield getSlices(sliceIDs);
+    const archive = yield tarSlices(sliceID, slices);
+    this.type = 'application/x-tar; charset=binary';
+    this.set(`Content-disposition', 'attachment; filename=${sliceID}.json`)
+    console.log(archive);
+    this.body = slices;
   })
 
   .post('/api/slices', function* () {
