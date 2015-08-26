@@ -1,0 +1,14 @@
+#!/usr/local/bin/zsh -e
+
+HOST=localhost
+PORT=3000
+ENDPOINT=$HOST:$PORT/api/slices
+SLICES=$@
+
+nc -z $HOST $PORT 1>/dev/null || (echo "$ENDPOINT not available"; exit 1)
+
+for slice in $SLICES; do
+	test -f $slice || (echo "$slice not found"; exit 1)
+	curl -s -XPOST -H "Content-Type: application/json" -d "$(cat $slice)" $ENDPOINT
+	echo
+done

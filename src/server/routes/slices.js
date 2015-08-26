@@ -6,6 +6,7 @@ import Router from 'koa-router';
 let router = new Router();
 
 import { getSlice, sampleSlices } from '../middleware/slices';
+import insert from '../middleware/insert';
 
 router
 
@@ -37,6 +38,10 @@ router
   // get a sample of n slices
   .get('/api/slices', function* () {
     this.body = yield sampleSlices();
+  })
+
+  .post('/api/slices', function* () {
+    this.body = yield insert(this.request.body);
   })
 
 const app = koa()
