@@ -9,15 +9,20 @@ import {
 
 import uniq from 'lodash/array/uniq';
 import sort from 'lodash/collection/sortBy';
-
+import _ from 'lodash';
 export function slices(state = [], action) {
   switch (action.type) {
     case RECEIVE_SLICES:
+    debugger
       return uniq([...state, ...action.payload], 'sliceID');
 		case RECEIVE_REFERENCES:
       return uniq([...state, ...action.payload], 'sliceID');
 		case CROP_SELECTED_SLICE:
-			return [...state.filter(slice => slice.sliceID === action.sliceID)];
+		debugger
+			return [
+				...state.filter(slice => slice.sliceID === action.sliceID),
+				...state.filter(slice => _.contains(action.references, slice.sliceID))
+			];
     default:
       return state;
   }

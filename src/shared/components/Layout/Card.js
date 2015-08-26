@@ -5,14 +5,11 @@ import StyleSheet from 'react-style';
 var styles = StyleSheet.create({
   fragmentCard: {
     width: '100%',
-    margin: '12px'
-  },
-  header: {
-    width: '100%',
-    margin: '12px'
+    margin: '8px 0',
+    minHeight: '0px',
+    border: '2px solid #aaa'
   },
   fragment: {
-    width: '100%',
     margin: '12px'
   }
 });

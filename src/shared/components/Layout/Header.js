@@ -6,11 +6,13 @@ var styles = StyleSheet.create({
     paddingRight: '300px',
   }
 });
+import _ from 'lodash';
 
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.findFragment = this.findFragment.bind(this);
+    this.handleSampleSlices = this.handleSampleSlices.bind(this);
   }
 
   handleSampleSlices() {
@@ -26,7 +28,8 @@ export default class Header extends Component {
   }
 
   render() {
-    const { selected, sampleSlices, cropSelectedSlice } = this.props;
+    const { selected, sampleSlices, cropSelectedSlice, references } = this.props;
+    const sliceIDs = [selected.sliceID, ...references.map(ref => ref.sliceID)];
     return (
       <header className='mdl-layout__header' style={styles.main}>
         <div className='mdl-layout__header-row'>
@@ -35,8 +38,7 @@ export default class Header extends Component {
           <nav className='mdl-navigation'>
             <Link to='/slices' className='mdl-navigation__link'>slices</Link>
             <a className='mdl-navigation__link' onClick={this.handleSampleSlices.bind(this)}>sample</a>
-            <a className='mdl-navigation__link' onClick={cropSelectedSlice.bind(null,selected[0])}>crop</a>
-            <a className='mdl-navigation__link' onClick={cropSelectedSlice.bind(null,selected[0])}>flag</a>
+            <a className='mdl-navigation__link' onClick={cropSelectedSlice.bind(null, sliceIDs)}>crop</a>
           </nav>
 
           <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--align-right">

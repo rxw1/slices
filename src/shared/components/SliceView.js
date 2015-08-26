@@ -10,8 +10,8 @@ export default class SliceView extends Component {
   render() {
     const { selectedSlice, referencedSlices } = this.props;
     const fragments = [...selectedSlice, ...referencedSlices].map(slice => {
-      return (
-        <Fragment key={slice.sliceID} fragment={slice.fragment} />
+        // <Fragment key={slice.sliceID} fragment={slice.fragment} />
+      return (<div />
       );
     });
     return <div>{fragments}</div>;

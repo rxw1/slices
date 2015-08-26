@@ -30,6 +30,9 @@ app.use(compress());
 import favicon from 'koa-favicon';
 app.use(favicon());
 
+import bodyparser from 'koa-bodyparser';
+app.use(bodyparser());
+
 import api from './api';
 app.use(api());
 

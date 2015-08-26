@@ -53,8 +53,24 @@ function makeSelected(payload) {
 export function selectSlice(sliceID) {
   return dispatch => {
     dispatch(makeSelected(sliceID));
+    // dispatch(requestSlices(sliceID));
+    return get(`/api/slices/${sliceID}/refs`)
+      .then(result => dispatch(receiveReferences(result)));
+  }
+}
+
+export function fetchReferences(sliceID) {
+  return dispatch => {
     dispatch(requestReferences(sliceID));
     return get(`/api/slices/${sliceID}/refs`)
+      .then(result => dispatch(receiveReferences(result)));
+  }
+}
+
+export function fetchSlice(sliceID) {
+  return dispatch => {
+    dispatch(requestSlices(sliceID));
+    return get(`/api/slices/${sliceID}/n`)
       .then(result => dispatch(receiveReferences(result)));
   }
 }

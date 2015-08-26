@@ -10,31 +10,41 @@ import { tarSlices } from '../middleware/tar.gz';
 
 import insert from '../middleware/insert';
 
+import 'isomorphic-fetch';
+
 router
 
   // get a single slice
-  .get('/api/slices/:sliceID/n', function* (next) {
+
+  // get all references for a slice (excluding the actual slice)
+
+  // get a slice and all of its references
+
+  // get random n slices
+
+  // get a single slice
+  .get('/api/slices/:sliceID/n', function* () {
     if (!this.params.sliceID) return;
     const sliceIDs = [parseInt(this.params.sliceID)];
-    const slices = yield getSlice(sliceIDs);
+    const slices = yield getSlices(sliceIDs);
     _.remove(slices, {sliceID: parseInt(this.params.sliceID)})
     this.body = slices;
   })
 
   // get all references only
-  .get('/api/slices/:sliceID/refs', function* (next) {
+  .get('/api/slices/:sliceID/refs', function* () {
     if (!this.params.sliceID) return;
     const sliceIDs = [parseInt(this.params.sliceID)];
-    const slices = yield getSlice(sliceIDs);
+    const slices = yield getSlices(sliceIDs);
     _.remove(slices, {sliceID: parseInt(this.params.sliceID)})
     this.body = slices;
   })
 
   // get a slice including all references
-  .get('/api/slices/:sliceID', function* (next) {
+  .get('/api/slices/:sliceID', function* () {
     if (!this.params.sliceID) return;
     const sliceIDs = [parseInt(this.params.sliceID)];
-    this.body = yield getSlice(sliceIDs);
+    this.body = yield getSlices(sliceIDs);
   })
 
   // get a sample of n slices
