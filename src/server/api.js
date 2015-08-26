@@ -7,8 +7,7 @@ import { slices, languages } from './routes';
 const app = koa()
   .use(bodyparser())
   .use(slices())
-  .use(languages())
-;
+  .use(languages());
 
 export default function () {
   return compose(app.middleware);
