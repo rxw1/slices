@@ -18,6 +18,10 @@ Start up the server:
 npm run dev
 ```
 
+```shell
+mkdir public && cp -r node_modules/highlight.js/styles public
+```
+
 To insert slices into the database, post them to `/api/slices`:
 
 ```shell
@@ -28,14 +32,7 @@ done
 
 If things went well, the client should be reachable at `localhost:3000/slices`. You can query the API on e.g. `localhost:3000/api/slices`. See [src/server/routes/slices.js](https://github.com/rwilhelm/slices/blob/master/src/server/routes/slices.js) for some of the available routes.
 
-### How to play
-
-1. Click the `sample` button. Three random slices will be fetched and displayed.
-2. Click on some code fragment. All its referenced slices will be fetched and displayed.
-3. Click the `slices` button to go back. The browser's back button should work as well.
-4. Repeat.
-
-### Used stuff
+---
 
 * Redux + Redux Devtools
 * React + React Router
@@ -45,7 +42,5 @@ If things went well, the client should be reachable at `localhost:3000/slices`. 
 * ES7 w/ Babel
 * Webpack
 * Universal/Server side rendering
-
-### Thank you
 
 This project is somehow based on [khtdr's Isomorphic port of the redux counter app](https://github.com/khtdr/redux-react-koa-isomorphic-counter-example) and the [official Redux examples](https://github.com/rackt/redux/tree/master/examples).
