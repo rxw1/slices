@@ -8,3 +8,4 @@ _book
 public
 bin/db-setup/slices
 bin/import/slices
+slices
