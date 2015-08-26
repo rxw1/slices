@@ -2,7 +2,9 @@ import {
   RECEIVE_SLICES,
   RECEIVE_REFERENCES,
   SELECT_SLICE,
-  CROP_SELECTED_SLICE
+  CROP_SELECTED_SLICE,
+  RECEIVE_FRAGMENT,
+  CLEAR_SEARCH
 } from '../actions/types';
 
 import uniq from 'lodash/array/uniq';
@@ -34,6 +36,17 @@ export function selected(state = [], action) {
 	switch (action.type) {
 		case SELECT_SLICE:
 			return [action.payload];
+		default:
+			return state;
+	}
+}
+
+export function searched(state = [], action) {
+	switch (action.type) {
+		case RECEIVE_FRAGMENT:
+			return [...action.payload.hits.hits];
+		case CLEAR_SEARCH:
+			return [];
 		default:
 			return state;
 	}

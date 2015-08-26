@@ -8,15 +8,20 @@ import Fragment from '../components/Fragment';
 
 export default class Slices extends Component {
   render() {
-    const { slices } = this.props;
+    const { slices, searched } = this.props;
+
+    const searchResults = searched.map(result => {
+      return (
+        <Card key={result._id} header={result._score} selectSlice={this.props.selectSlice} sliceID={result._source.sliceID}>
+          <Fragment fragment={result._source.fragment} />
+        </Card>
+      );
+    })
+
     return (
-      <pre>
-        {slices.map((slice, idx) => (
-          <Card key={slice.sliceID} header={slice.sliceID} selectSlice={this.props.selectSlice} sliceID={slice.sliceID}>
-            <Fragment fragment={slice.fragment} />
-          </Card>
-        ))}
-      </pre>
+      <div>
+        <pre>{searchResults}</pre>
+      </div>
     );
   }
 }
@@ -31,7 +36,8 @@ Slices.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    slices: state.slices
+    slices: state.slices,
+    searched: state.searched
   };
 }
 

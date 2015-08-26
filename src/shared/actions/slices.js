@@ -7,7 +7,10 @@ import {
   RECEIVE_REFERENCES,
   FETCH_REFERENCES,
   SAMPLE_SLICES,
-  CROP_SELECTED_SLICE
+  CROP_SELECTED_SLICE,
+  REQUEST_FRAGMENT,
+  RECEIVE_FRAGMENT,
+  CLEAR_SEARCH
 } from './types';
 
 function receiveSlices(payload) {
@@ -64,9 +67,37 @@ export function sampleSlices() {
   }
 }
 
+function requestFragment(query) {
+  return {
+    type: REQUEST_FRAGMENT,
+    payload: query
+  }
+}
+
+function receiveFragment(payload) {
+  return {
+    type: RECEIVE_FRAGMENT,
+    payload: payload
+  }
+}
+
+export function findFragment(query) {
+  return dispatch => {
+    dispatch(requestFragment(query));
+    return get(`/api/slices/f/${query}`)
+      .then(result => dispatch(receiveFragment(result)));
+  }
+}
+
 export function cropSelectedSlice(sliceID) {
   return {
     type: CROP_SELECTED_SLICE,
     sliceID: sliceID
+  }
+}
+
+export function clearSearch() {
+  return {
+    type: CLEAR_SEARCH
   }
 }

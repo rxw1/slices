@@ -10,10 +10,19 @@ var styles = StyleSheet.create({
 export default class Header extends Component {
   constructor(props) {
     super(props);
+    this.findFragment = this.findFragment.bind(this);
   }
 
   handleSampleSlices() {
     this.props.sampleSlices()
+  }
+
+  findFragment(q) {
+    if (q.target.value) {
+      this.props.findFragment(q.target.value);
+    } else {
+      this.props.clearSearch();
+    }
   }
 
   render() {
@@ -29,6 +38,11 @@ export default class Header extends Component {
             <a className='mdl-navigation__link' onClick={cropSelectedSlice.bind(null,selected[0])}>crop</a>
             <a className='mdl-navigation__link' onClick={cropSelectedSlice.bind(null,selected[0])}>flag</a>
           </nav>
+
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--align-right">
+            <input onChange={this.findFragment} className="mdl-textfield__input" type="text" name="search" />
+          </div>
+
         </div>
       </header>
     );

@@ -44,6 +44,12 @@ router
     this.body = yield insert(this.request.body);
   })
 
+  .get('/api/slices/f/:word', function* () {
+    let response = yield fetch(`http://localhost:9200/slices/slices/_search?q=fragment:${this.params.word}&size=30`);
+    const hits = response.body;
+    this.body = hits;
+  })
+
 const app = koa()
   .use(bodyparser())
   .use(router.routes())
