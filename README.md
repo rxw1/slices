@@ -6,18 +6,24 @@ Install dependencies first.
 npm install
 ```
 
-Then make sure you have RethinkDB set up and running. Put some slices into `bin/import/slices`, startup the import server and trigger it:
+Then make sure you have RethinkDB set up and running. There's a script to setup the DB:
 
 ```shell
-npm install
-node bin/import
-curl localhost:3005
+bin/setup
 ```
 
-After the import is done, just kill the import server and start the actual app:
+Start up the server:
 
 ```shell
 npm run dev
+```
+
+To insert slices into the database, post them to `/api/slices`:
+
+```shell
+for slice in slices/*; do
+  curl -s -XPOST -H "Content-Type: application/json" -d "$(cat $slice)" localhost:3000/api/slices
+done
 ```
 
 If things went well, the client should be reachable at `localhost:3000/slices`. You can query the API on e.g. `localhost:3000/api/slices`. See [src/server/routes/slices.js](https://github.com/rwilhelm/slices/blob/master/src/server/routes/slices.js) for some of the available routes.
