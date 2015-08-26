@@ -3,6 +3,13 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import createLogger from 'redux-logger';
 
+import { batchedSubscribe } from 'redux-batched-subscribe';
+import _ from 'lodash';
+import { reducer as form } from 'redux-form';
+
+const batchDebounce = _.debounce(notify => notify());
+// const store = batchedSubscribe(batchDebounce)(createStore)(reducer, intialState);
+
 // Redux DevTools store enhancers
 import { devTools, persistState } from 'redux-devtools';
 
@@ -23,6 +30,7 @@ const createStoreWithMiddleware = compose(
 	devTools(),
 	// Lets you write ?debug_session=<name> in address bar to persist debug sessions
 	//persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+	batchedSubscribe(batchDebounce),
 	createStore
 );
 

@@ -15,6 +15,10 @@ export default class Fragment extends Component {
     super(props);
   }
 
+  // componentWillMount() {
+  //    this.method = _.debounce(this.findFragment, 2000);
+  // }
+
   render() {
     const { sliceID } = this.props;
     const fragment = this.props.fragment.map((chunk, idx) => {
