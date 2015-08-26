@@ -4,6 +4,7 @@ import { Router } from 'react-router';
 import Location from 'react-router/lib/Location';
 import routes from '../shared/routes';
 import { fetchLanguages } from '../shared/actions/languages';
+import { selectSlice, fetchSlice, fetchReferences } from '../shared/actions/slices';
 import configureStore from '../shared/store/configureStore';
 
 import nunjucks from 'nunjucks';
@@ -15,6 +16,15 @@ export default function render() {
     const store = configureStore();
 
     yield store.dispatch(fetchLanguages());
+
+    const sliceID = parseInt(this.request.path.split('/').find(x => x.match(/^[0-9]+$/)));
+
+    if (sliceID) {
+      console.log('getting initial slices due to url param');
+      // yield store.dispatch(fetchSlice(sliceID));
+      // yield store.dispatch(fetchReferences(sliceID));
+      yield store.dispatch(selectSlice(sliceID));
+    }
 
     this.body = yield new Promise(resolve => {
       Router.run(routes, location, (error, initialRouterState, transition) => {
