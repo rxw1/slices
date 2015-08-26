@@ -6,7 +6,7 @@ Install dependencies first.
 npm install
 ```
 
-Then make sure you have RethinkDB set up and running. There's a script to setup the DB:
+Make sure RethinkDB is set up and running. There's a script to setup our database and tables:
 
 ```shell
 bin/setup
