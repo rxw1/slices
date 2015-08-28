@@ -4,16 +4,19 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/slices';
 import Slice from '../components/Slice';
 import Fragment from '../components/Fragment';
+import Card from '../components/Layout/Card';
 import _ from 'lodash';
 
 export default class SliceView extends Component {
   render() {
     const { selectedSlice, referencedSlices } = this.props;
     const fragments = [...selectedSlice, ...referencedSlices].map(slice => {
-        // <Fragment key={slice.sliceID} fragment={slice.fragment} />
-      return (<div />
+      return (
+        <Card key={slice.sliceID} selectSlice={this.props.selectSlice} sliceID={slice.sliceID}>
+          <Fragment key={slice.sliceID} fragment={slice.fragment} />
+        </Card>
       );
-    });
+    })
     return <div>{fragments}</div>;
   }
 }
