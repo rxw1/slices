@@ -1,11 +1,9 @@
-.DS_Store
 *.log
-node_modules
+.DS_Store
+_book
+coverage
 dist
 lib
-coverage
-_book
+node_modules
 public
-bin/db-setup/slices
-bin/import/slices
 slices
