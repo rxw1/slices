@@ -60,8 +60,12 @@ repeat 42 xget api/slices/sample/1 | pick "uses[].reference.otherSlice" | grep -
 Insert a directory of slices into the database
 ```shell
 slices=($(ls -1 slices))
-for i in slices/*; do xpost api/slices -H "Content-Type: application/json" -d "$(cat $i)"; echo; done
+for i in slices/*; do
+  xpost api/slices -H "Content-Type: application/json" -d "$(cat $i)"
+  echo
+done
 ```
+
 ---
 
 * Redux + Redux Devtools
