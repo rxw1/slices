@@ -1,19 +1,28 @@
 import koa from 'koa';
 import bodyparser from 'koa-bodyparser';
 import compose from 'koa-compose';
-import _ from 'lodash';
 
 import rethinkdbdash from 'rethinkdbdash';
 let r = rethinkdbdash({db: 'slices'});
 
 import Router from 'koa-router';
-let router = new Router();
+let router = new Router({
+  prefix: '/api/languages'
+});
+
+// get all available languages (slow)
+
+export function languages () {
+  return function* () {
+    return yield r.table("slices").concatMap(function(x) {
+      return x('language');
+    }).distinct();
+  }
+}
 
 router
-  .get('/api/languages', function* () {
-    const slices = yield r.table('slices');
-    const languages = _.chain(slices).map('language').flatten().uniq();
-    this.body = languages;
+  .get('/', function* () {
+    this.body = yield languages();
   })
 
 const app = koa()
