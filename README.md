@@ -49,7 +49,11 @@ xget api/slices/search/int\?size=50 | jq '.hits.hits[]._source.sliceID'
 
 Pretty reference counts
 ```shell
-(repeat 42 (a=$(xget api/slices/$(xget api/slices/sample/1 | pick sliceID)/refs | pick sliceID | wc -l); echo -n $a\ ; repeat $a printf .) && echo) | lolcat -F 0.5
+(repeat 42 (
+  a=$(xget api/slices/$(xget api/slices/sample/1 | pick sliceID)/refs | pick sliceID | wc -l)
+  echo -n "$a "
+  repeat $a printf .
+) && echo) | lolcat -F 0.5
 ```
 
 Count duplicate slices on each fetch
