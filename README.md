@@ -44,7 +44,7 @@ xget () {	curl -s -XGET localhost:$PORT/$1 }
 
 Query Elasticsearch and get sliceIDs only
 ```shell
-xget api/slices/search/int\?size=50 | xget api/slices/search/int\?size=50 | jq '.hits.hits[]._source.sliceID'
+xget api/slices/search/int\?size=50 | jq '.hits.hits[]._source.sliceID'
 ```
 
 Pretty reference counts
