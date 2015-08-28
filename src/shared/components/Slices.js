@@ -10,13 +10,24 @@ export default class Slices extends Component {
   render() {
     const { slices, searched } = this.props;
 
-    const searchResults = searched.map(result => {
-      return (
-        <Card key={result._id} header={result._score} selectSlice={this.props.selectSlice} sliceID={result._source.sliceID}>
-          <Fragment fragment={result._source.fragment} />
-        </Card>
-      );
-    })
+    let searchResults;
+    if (!searched.length) {
+      searchResults = this.props.slices.map(slice => {
+        return (
+          <Card key={slice.sliceID} selectSlice={this.props.selectSlice} sliceID={slice.sliceID}>
+            <Fragment fragment={slice.fragment} />
+          </Card>
+        );
+      })
+    } else {
+      searchResults = searched.map(result => {
+        return (
+          <Card key={result._id} header={result._score} selectSlice={this.props.selectSlice} sliceID={result._source.sliceID}>
+            <Fragment fragment={result._source.fragment} />
+          </Card>
+        );
+      })
+    }
 
     return (
       <div>
