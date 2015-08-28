@@ -3,8 +3,8 @@ import {
   RECEIVE_REFERENCES,
   SELECT_SLICE,
   CROP_SELECTED_SLICE,
-  RECEIVE_FRAGMENT,
-  CLEAR_SEARCH
+  SEARCH_RESPONSE,
+  SEARCH_CLEAR
 } from '../actions/types';
 
 import uniq from 'lodash/array/uniq';
@@ -13,12 +13,10 @@ import _ from 'lodash';
 export function slices(state = [], action) {
   switch (action.type) {
     case RECEIVE_SLICES:
-    debugger
       return uniq([...state, ...action.payload], 'sliceID');
 		case RECEIVE_REFERENCES:
       return uniq([...state, ...action.payload], 'sliceID');
 		case CROP_SELECTED_SLICE:
-		debugger
 			return [
 				...state.filter(slice => slice.sliceID === action.sliceID),
 				...state.filter(slice => _.contains(action.references, slice.sliceID))
@@ -48,9 +46,9 @@ export function selected(state = [], action) {
 
 export function searched(state = [], action) {
 	switch (action.type) {
-		case RECEIVE_FRAGMENT:
+		case SEARCH_RESPONSE:
 			return [...action.payload.hits.hits];
-		case CLEAR_SEARCH:
+		case SEARCH_CLEAR:
 			return [];
 		default:
 			return state;

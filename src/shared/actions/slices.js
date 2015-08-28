@@ -3,23 +3,18 @@ import { get } from '../fetch';
 import {
   FETCH_SLICES,
   RECEIVE_SLICES,
+
   SELECT_SLICE,
+
   RECEIVE_REFERENCES,
   FETCH_REFERENCES,
-  SAMPLE_SLICES,
-  CROP_SELECTED_SLICE,
-  REQUEST_FRAGMENT,
-  RECEIVE_FRAGMENT,
-  CLEAR_SEARCH
-} from './types';
 
-function receiveSlices(payload) {
-  return {
-    type: RECEIVE_SLICES,
-    payload: payload,
-    receivedAt: Date.now()
-  };
-}
+  CROP_SELECTED_SLICE,
+
+  SEARCH_QUERY,
+  SEARCH_CLEAR,
+  SEARCH_RESPONSE
+} from './types';
 
 function receiveReferences(payload) {
   return {
@@ -50,6 +45,49 @@ function makeSelected(payload) {
   };
 }
 
+function receiveSlices(payload) {
+  return {
+    type: RECEIVE_SLICES,
+    payload: payload,
+    receivedAt: Date.now()
+  };
+}
+
+function requestFragment(query) {
+  return {
+    type: SEARCH_QUERY,
+    payload: query
+  }
+}
+
+function receiveFragment(payload) {
+  return {
+    type: SEARCH_RESPONSE,
+    payload: payload
+  }
+}
+
+export function findFragment(query) {
+  return dispatch => {
+    dispatch(requestFragment(query));
+    return get(`/api/slices/search/${query}`)
+      .then(result => dispatch(receiveFragment(result)));
+  }
+}
+
+export function cropSelectedSlice(sliceID) {
+  return {
+    type: CROP_SELECTED_SLICE,
+    sliceID: sliceID
+  }
+}
+
+export function clearSearch() {
+  return {
+    type: SEARCH_CLEAR
+  }
+}
+
 export function selectSlice(sliceID) {
   return dispatch => {
     dispatch(makeSelected(sliceID));
@@ -67,53 +105,11 @@ export function fetchReferences(sliceID) {
   }
 }
 
-export function fetchSlice(sliceID) {
+export function sampleSlices(count) {
   return dispatch => {
-    dispatch(requestSlices(sliceID));
-    return get(`/api/slices/${sliceID}/n`)
-      .then(result => dispatch(receiveReferences(result)));
-  }
-}
+    dispatch(requestSlices(count));
 
-export function sampleSlices() {
-  return dispatch => {
-    dispatch(requestSlices());
-    return get('/api/slices')
+    return get(`/api/slices/sample${count ? (count ? 'count/' + count : '') : ''}`)
       .then(result => dispatch(receiveSlices(result)));
-  }
-}
-
-function requestFragment(query) {
-  return {
-    type: REQUEST_FRAGMENT,
-    payload: query
-  }
-}
-
-function receiveFragment(payload) {
-  return {
-    type: RECEIVE_FRAGMENT,
-    payload: payload
-  }
-}
-
-export function findFragment(query) {
-  return dispatch => {
-    dispatch(requestFragment(query));
-    return get(`/api/slices/f/${query}`)
-      .then(result => dispatch(receiveFragment(result)));
-  }
-}
-
-export function cropSelectedSlice(sliceID) {
-  return {
-    type: CROP_SELECTED_SLICE,
-    sliceID: sliceID
-  }
-}
-
-export function clearSearch() {
-  return {
-    type: CLEAR_SEARCH
   }
 }
