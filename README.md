@@ -58,7 +58,8 @@ Pretty reference counts
 
 Count duplicate slices on each fetch
 ```shell
-repeat 42 xget api/slices/sample/1 | pick "uses[].reference.otherSlice" | grep -v null | uniq -d | wc -l
+repeat 42 xget api/slices/sample/1 | pick "uses[].reference.otherSlice" |\
+  grep -v null | uniq -d | wc -l
 ```
 
 Insert a directory of slices into the database
