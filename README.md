@@ -38,8 +38,8 @@ If things went well, the client should be reachable at `localhost:3000/slices`. 
 
 ```shell
 export PORT=3000
-pick () {	jq ".[].$1" }
-xget () {	curl -s -XGET localhost:$PORT/$1 }
+pick () { jq ".[].$1" }
+xget () { curl -s -XGET localhost:$PORT/$1 }
 ```
 
 Query Elasticsearch and get sliceIDs only
