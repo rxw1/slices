@@ -34,6 +34,36 @@ If things went well, the client should be reachable at `localhost:3000/slices`. 
 
 ---
 
+#### Zsh love
+
+```shell
+export PORT=3000
+pick () {	jq ".[].$1" }
+xget () {	curl -s -XGET localhost:$PORT/$1 }
+```
+
+Query Elasticsearch and get sliceIDs only
+```shell
+xget api/slices/search/int\?size=50 | xget api/slices/search/int\?size=50 | jq '.hits.hits[]._source.sliceID'
+```
+
+Pretty reference counts
+```shell
+(repeat 42 (a=$(xget api/slices/$(xget api/slices/sample/1 | pick sliceID)/refs | pick sliceID | wc -l); echo -n $a\ ; repeat $a printf .) && echo) | lolcat -F 0.5
+```
+
+Count duplicate slices on each fetch
+```shell
+repeat 42 xget api/slices/sample/1 | pick "uses[].reference.otherSlice" | grep -v null | uniq -d | wc -l
+```
+
+Insert a directory of slices into the database
+```shell
+slices=($(ls -1 slices))
+for i in slices/*; do xpost api/slices -H "Content-Type: application/json" -d "$(cat $i)"; echo; done
+```
+---
+
 * Redux + Redux Devtools
 * React + React Router
 * RethinkDB + Elasticsearch
