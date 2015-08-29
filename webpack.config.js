@@ -15,7 +15,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/public/js/'),
-    filename: 'app.js',
+    filename: 'app.min.js',
     publicPath: 'http://localhost:3001/js/'
   },
   plugins: [
