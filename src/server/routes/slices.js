@@ -28,6 +28,10 @@ export function getSlices (sliceIDs, slices = []) {
       sliceIDs = sliceIDs.split(',').map(Number);
     }
 
+    if (typeof sliceIDs === 'number') {
+      sliceIDs = [sliceIDs];
+    }
+
     const result = yield r.table('slices').getAll(...sliceIDs)
 
     slices.push(...result);
@@ -87,13 +91,56 @@ export function searchSlices () {
 // get references only
 export function getReferences (sliceIDs) {
   return function* () {
-    let slices = yield getSlices(this.params.sliceIDs)
+    let slices = yield getSlices(parseInt(this.params.sliceID))
     // TODO avoid getting duplicates
     _.remove(slices, {sliceID: parseInt(this.params.sliceID)});
     return slices;
   }
 }
 
+export function getSlicesWithInstances () {
+  return function* () {
+    return yield r.table('slices').filter(r.row('instances').count().gt(0));
+  }
+}
+
+export function getSlicesWithReferences () {
+  return function* () {
+    return yield r.table('slices').filter(r.row('uses').count().gt(0));
+  }
+}
+
+export function getSlicesWithoutReferences () {
+  return function* () {
+    return yield r.table('slices').filter(r.row('uses').count().eq(0));
+  }
+}
+
+export function upvoteSlice (sliceID) {
+  return function* () {
+    return yield r.table('slices').get(sliceID).update({
+      upvotes: r.row('upvotes').add(1).default(1)
+    })
+  };
+}
+
+export function downvoteSlice (sliceID) {
+  return function* () {
+    return yield r.table('slices').get(sliceID).update({
+      upvotes: r.row('upvotes').sub(1).default(-1)
+    })
+  };
+}
+
+export function toggleLike (sliceID) {
+  return function* () {
+    return yield r.table('slices').get(sliceID).update({
+      liked: r.row('liked').not().default(true)
+    })
+  };
+}
+
+// get all slices with instances
 router
   .get('/', function* () {
     this.body = yield getAllSlices();
@@ -104,15 +151,36 @@ router
   .get('/sample/:amount?', function* () {
     this.body = yield sampleSlices(this.params.amount);
   })
-  .get('/:sliceIDs(\\d+)+/refs', function* () {
-    this.body = yield getReferences(this.params.sliceIDs);
+  .get('/withInstances', function* () {
+    this.body = yield getSlicesWithInstances();
   })
-  .get('/:sliceIDs(\\d+)?', function* () {
-    this.body = yield getSlices(this.params.sliceIDs);
+  .get('/withReferences', function* () {
+    this.body = yield getSlicesWithReferences();
+  })
+  .get('/withoutReferences', function* () {
+    this.body = yield getSlicesWithoutReferences();
+  })
+  .get('/:sliceID(\\d+)+/refs', function* () {
+    this.body = yield getReferences(this.params.sliceID);
+  })
+  .get('/:sliceID(\\d+)?', function* () {
+    this.body = yield getSlices(this.params.sliceID);
+  })
+  .post('/:sliceID(\\d+)+/upvote', function* () {
+    this.body = yield upvoteSlice(parseInt(this.params.sliceID));
+  })
+  .post('/:sliceID(\\d+)+/downvote', function* () {
+    this.body = yield downvoteSlice(parseInt(this.params.sliceID));
+  })
+  .post('/:sliceID(\\d+)+/like', function* () { // toggles
+    this.body = yield toggleLike(parseInt(this.params.sliceID));
   })
   .post('/', function* () {
     this.body = yield insertSlice(this.request.body);
   });
+
+// TODO normalize and sanitize all params in an ordered manner, so that
+// parseInt(this.params...) isn't all over the place.
 
 const app = koa()
   .use(bodyparser())

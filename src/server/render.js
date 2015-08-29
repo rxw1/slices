@@ -20,9 +20,7 @@ export default function render() {
     const sliceID = parseInt(this.request.path.split('/').find(x => x.match(/^[0-9]+$/)));
 
     if (sliceID) {
-      console.log('getting initial slices due to url param');
-      // yield store.dispatch(fetchSlice(sliceID));
-      // yield store.dispatch(fetchReferences(sliceID));
+      console.log(`>>> getting initial state for ${sliceID} due to url param`);
       yield store.dispatch(selectSlice(sliceID));
     }
 

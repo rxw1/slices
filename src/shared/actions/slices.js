@@ -9,11 +9,16 @@ import {
   RECEIVE_REFERENCES,
   FETCH_REFERENCES,
 
-  CROP_SELECTED_SLICE,
+  CLEAR_SLICES,
 
   SEARCH_QUERY,
   SEARCH_CLEAR,
-  SEARCH_RESPONSE
+  SEARCH_RESPONSE,
+
+  LIKED,
+  UNLIKED,
+
+  SLICE_UPDATED
 } from './types';
 
 function receiveReferences(payload) {
@@ -31,6 +36,13 @@ function requestSlices(sliceID) {
   };
 }
 
+function requestSlicesWithInstances(sliceID) {
+  return {
+    type: FETCH_SLICES,
+    sliceID: sliceID
+  };
+}
+
 function requestReferences(sliceID) {
   return {
     type: FETCH_REFERENCES,
@@ -42,6 +54,20 @@ function makeSelected(payload) {
   return {
     type: SELECT_SLICE,
     payload: payload
+  };
+}
+
+function markSlice(sliceID) {
+  return {
+    type: SLICE_MARKED,
+    sliceID: sliceID
+  };
+}
+
+function toggleLike(sliceID) {
+  return {
+    type: LIKED,
+    sliceID: sliceID
   };
 }
 
@@ -67,9 +93,17 @@ function receiveFragment(payload) {
   }
 }
 
+export function fetchSlicesWithInstances() {
+  return dispatch => {
+    dispatch(requestSlicesWithInstances());
+    return get(`/api/slices/withInstances`)
+      .then(result => dispatch(receiveSlices(result)));
+  }
+}
+
 export function findFragment(query) {
   return dispatch => {
-    dispatch(requestFragment(query));
+    dispatch  (requestFragment(query));
     return get(`/api/slices/search/${query}`)
       .then(result => dispatch(receiveFragment(result)));
   }
@@ -77,8 +111,15 @@ export function findFragment(query) {
 
 export function cropSelectedSlice(sliceID) {
   return {
-    type: CROP_SELECTED_SLICE,
+    type: CLEAR_SLICES,
     sliceID: sliceID
+  }
+}
+
+export function receiveUpdatedSlice(payload) {
+  return {
+    type: SLICE_UPDATED,
+    payload: payload
   }
 }
 
@@ -108,8 +149,14 @@ export function fetchReferences(sliceID) {
 export function sampleSlices(count) {
   return dispatch => {
     dispatch(requestSlices(count));
-
     return get(`/api/slices/sample${count ? (count ? 'count/' + count : '') : ''}`)
       .then(result => dispatch(receiveSlices(result)));
+  }
+}
+
+export function upvoteSlice(sliceID) {
+  return dispatch => {
+    return get(`/api/slices/${sliceID}/upvote`)
+      .then(result => dispatch(receiveUpdatedSlice(result)));
   }
 }

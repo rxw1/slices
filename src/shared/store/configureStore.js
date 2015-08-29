@@ -25,11 +25,15 @@ if (global.hasOwnProperty('window')) {
 	middleware.push(logger);
 }
 
+// NB: order is important
+// https://github.com/gaearon/redux-thunk/issues/9
+// https://github.com/gaearon/redux-devtools/issues/68#issuecomment-131245239
+
 const createStoreWithMiddleware = compose(
 	applyMiddleware(...middleware),
 	devTools(),
 	// Lets you write ?debug_session=<name> in address bar to persist debug sessions
-	//persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+	// persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
 	batchedSubscribe(batchDebounce),
 	createStore
 );

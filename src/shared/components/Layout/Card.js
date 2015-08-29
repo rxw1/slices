@@ -17,18 +17,12 @@ var styles = StyleSheet.create({
 export default class Card extends Component {
   constructor(props) {
     super(props);
-    this.selectSlice = this.selectSlice.bind(this);
-  }
-
-  selectSlice(sliceID) {
-    this.props.selectSlice(sliceID);
-    this.context.router.transitionTo(`/slices/${sliceID}`)
   }
 
   render() {
-    const { sliceID } = this.props;
+    const { sliceID, selectSlice } = this.props;
     return (
-      <div style={styles.fragmentCard} className="mdl-card mdl-shadow--4dp" onClick={this.selectSlice.bind(null, sliceID)}>
+      <div style={styles.fragmentCard} className="mdl-card mdl-shadow--4dp">
         <div style={styles.fragment} className="mdl-card__supporting-text mdl-card--expand">
           {this.props.children}
         </div>
@@ -38,6 +32,7 @@ export default class Card extends Component {
 }
 
 Card.propTypes = {
+  selectSlice: PropTypes.func.isRequired
 }
 
 Card.contextTypes = {

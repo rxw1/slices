@@ -7,12 +7,17 @@ import Card from '../components/Layout/Card';
 import Fragment from '../components/Fragment';
 
 export default class SlicesCards extends Component {
+
+  constructor() {
+    super();
+  }
+
   render() {
     const { slices, searched } = this.props;
 
     const searchResults = searched.map(result => {
       return (
-        <Card key={result._id} header={result._score} selectSlice={this.props.selectSlice} sliceID={result._source.sliceID}>
+        <Card key={result._id} header={result._score} sliceID={result._source.sliceID}>
           <Fragment fragment={result._source.fragment} />
         </Card>
       );

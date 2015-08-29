@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import StyleSheet from 'react-style';
-import { Link } from 'react-router';
 
 import Highlight from 'react-highlight';
+import StyleSheet from 'react-style';
 
 var styles = StyleSheet.create({
   fragment: {
@@ -15,29 +14,19 @@ export default class Fragment extends Component {
     super(props);
   }
 
-  // componentWillMount() {
-  //    this.method = _.debounce(this.findFragment, 2000);
-  // }
-
   render() {
-    const { sliceID } = this.props;
     const fragment = this.props.fragment.map((chunk, idx) => {
       return <span key={idx}>{chunk}</span>;
     });
 
     return (
-      <div>
-        <Highlight style={styles.fragment} className='haskell'>
-          {fragment}
-        </Highlight>
-      </div>
+      <Highlight style={styles.fragment} className='haskell'>{fragment}</Highlight>
     );
   }
 }
 
 Fragment.propTypes = {
-  fragment: PropTypes.array.isRequired,
-  selectSlice: PropTypes.func.isRequired
+  fragment: PropTypes.array.isRequired
 };
 
 Fragment.contextTypes = {
