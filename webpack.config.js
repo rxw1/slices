@@ -5,13 +5,12 @@ var webpack = require('webpack');
 
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
-
-var url = `http://${host}:${port}`;
+const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    `webpack-dev-server/client?${url}`,
+    `webpack-dev-server/client?${BASEURL}`,
     'webpack/hot/only-dev-server',
     './src/client/app'
   ],
@@ -21,7 +20,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/public/js/'),
     filename: 'app.js',
-    publicPath: `${url}/js/`
+    publicPath: `${BASEURL}/js/`
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
