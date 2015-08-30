@@ -8,12 +8,14 @@ import config from '../../webpack.config';
 
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
+const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
 
 new WebpackDevServer(webpack(config), {
   noInfo: false,
   quiet: false,
   publicPath: config.output.publicPath,
   hot: true,
+  contentBase: BASEURL,
   historyApiFallback: true,
   stats: { colors: true },
   lazy: false,
@@ -23,4 +25,5 @@ new WebpackDevServer(webpack(config), {
 }).listen(port, host, function (err) {
   if (err) { console.log(err); }
   console.log('WebpackDevServer at %s:%s', host, port);
+  console.log(`WebpackDevServer at ${BASEURL}`);
 });

@@ -78,13 +78,16 @@ export function getAllSlices () {
 }
 
 // elasticsearch
+const ELASTIC_SEARCH_SERVER = 'http://localhost:9200';
+const ELASTIC_SEARCH_PATH = '/slices/slices/_search';
+
 export function searchSlices () {
   return function* () {
     console.log('lala');
     const { word } = this.params;
     const size = this.query.size ? `&size=${this.query.size}` : '';
-    const path = `http://localhost:9200/slices/slices/_search?q=fragment:${word}${size}`;
     console.log(path);
+    const path = `${ELASTIC_SEARCH_SERVER}${ELASTIC_SEARCH_PATH}?q=fragment:${word}${size}`;
     const response = yield fetch(path);
     return response.body;
   }

@@ -45,6 +45,11 @@ export default function render() {
 
         var state = store.getState();
 
+        const host = process.env.HOST || 'localhost';
+        const port = parseInt(process.env.PORT) + 1 || 3001;
+        const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
+        const appPath = `${BASEURL}/js/${process.env.NODE_ENV === 'development' ? `app.js` : `app.min.js`}`;
+
         resolve(`
           <!DOCTYPE html>
           <html>
@@ -63,7 +68,7 @@ export default function render() {
             <body>
               <div id="root">${appString}</div>
               <script>window.__initialState = ${JSON.stringify(state)}</script>
-              <script src="${process.env.NODE_ENV === 'development' ? 'http://localhost:3001/js/app.js' : 'js/app.js'}" defer></script>
+              <script src="${appPath}" defer></script>
             </body>
           </html>
         `);
