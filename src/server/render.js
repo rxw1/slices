@@ -47,6 +47,7 @@ export default function render() {
 
         resolve(`
           <!DOCTYPE html>
+          <html>
             <head>
               <meta charset="utf-8">
               <meta http-equiv="x-ua-compatible" content="ie=edge">
