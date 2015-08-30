@@ -14,6 +14,10 @@ let router = new Router({
 
 import 'isomorphic-fetch';
 
+import chain from 'lodash/chain';
+import uniq from 'lodash/array/uniq';
+import remove from 'lodash/array/remove';
+
 // get a sample of n slices w/o references
 export function sampleSlices (amount = 3) {
   return function* () {
@@ -36,7 +40,7 @@ export function getSlices (sliceIDs, slices = []) {
 
     slices.push(...result);
 
-    let refIDs = _.chain(result)
+    let refIDs = chain(result)
       .pluck('uses')
       .flatten()
       .pluck('reference.otherSlice')
@@ -53,7 +57,7 @@ export function getSlices (sliceIDs, slices = []) {
     // on every sliceID and never fetch anything we already have? Afaict there
     // are rarely more than 1-2 duplicates per run.
 
-    return _.uniq(slices, 'sliceID');
+    return uniq(slices, 'sliceID');
   }
 }
 
@@ -83,10 +87,8 @@ const ELASTIC_SEARCH_PATH = '/slices/slices/_search';
 
 export function searchSlices () {
   return function* () {
-    console.log('lala');
     const { word } = this.params;
     const size = this.query.size ? `&size=${this.query.size}` : '';
-    console.log(path);
     const path = `${ELASTIC_SEARCH_SERVER}${ELASTIC_SEARCH_PATH}?q=fragment:${word}${size}`;
     const response = yield fetch(path);
     return response.body;
@@ -98,7 +100,7 @@ export function getReferences (sliceIDs) {
   return function* () {
     let slices = yield getSlices(parseInt(this.params.sliceID))
     // TODO avoid getting duplicates
-    _.remove(slices, {sliceID: parseInt(this.params.sliceID)});
+    remove(slices, {sliceID: parseInt(this.params.sliceID)});
     return slices;
   }
 }

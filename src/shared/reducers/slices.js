@@ -14,14 +14,14 @@ import {
 } from '../actions/types';
 
 import uniq from 'lodash/array/uniq';
-import _ from 'lodash';
+import findIndex from 'lodash/array/findIndex';
 
 export function slices(state = [], action) {
   switch (action.type) {
     case RECEIVE_SLICES:
       return uniq([...state, ...action.payload], 'sliceID');
     case RECEIVE_SLICES_UPDATE:
-      const idx = _.findIndex(state, slice => slice.sliceID === action.payload.sliceID);
+      const idx = findIndex(state, slice => slice.sliceID === action.payload.sliceID);
       state.splice(idx, 1, action.payload);
       return [...state];
     case RECEIVE_REFERENCES:
