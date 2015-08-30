@@ -5,7 +5,7 @@ import Location from 'react-router/lib/Location';
 import routes from '../shared/routes';
 import { fetchLanguages } from '../shared/actions/languages';
 import { selectSlice, fetchSlice, fetchReferences } from '../shared/actions/slices';
-import configureStore from '../shared/store/configureStore';
+import configureStore from '../shared/store';
 
 import nunjucks from 'nunjucks';
 nunjucks.configure('src/shared', { autoescape: true });

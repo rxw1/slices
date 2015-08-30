@@ -1,13 +1,9 @@
 import { combineReducers } from 'redux';
-import languages from './languages';
-import { slices, references, selected, searched } from './slices';
 
-const rootReducer = combineReducers({
-  languages,
-  slices,
-  references,
-  selected,
-  searched
+import * as slices from './slices';
+import * as languages from './languages';
+
+export default combineReducers({
+  ...slices,
+  ...languages
 });
-
-export default rootReducer;

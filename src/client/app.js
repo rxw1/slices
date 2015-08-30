@@ -12,7 +12,7 @@ import routes from '../shared/routes';
 // React components for Redux DevTools
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
-import configureStore from '../shared/store/configureStore';
+import configureStore from '../shared/store';
 const store = configureStore(window.__initialState);
 
 function renderRouter() {
