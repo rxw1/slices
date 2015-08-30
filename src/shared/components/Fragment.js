@@ -6,6 +6,9 @@ import StyleSheet from 'react-style';
 var styles = StyleSheet.create({
   fragment: {
     margin: '0'
+  },
+  chunk: {
+    marginBottom: '1.5em'
   }
 });
 
@@ -16,7 +19,7 @@ export default class Fragment extends Component {
 
   render() {
     const fragment = this.props.fragment.map((chunk, idx) => {
-      return <span key={idx}>{chunk}</span>;
+      return <div key={idx} style={styles.chunk}>{chunk}</div>;
     });
 
     return (

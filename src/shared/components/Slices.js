@@ -1,29 +1,23 @@
 import React, { Component, PropTypes } from 'react';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/slices';
-import Slice from '../components/Slice';
+
 import Card from '../components/Layout/Card';
 import Fragment from '../components/Fragment';
 
 export default class Slices extends Component {
   render() {
-    const { slices, searched } = this.props;
+    const { ...other } = this.props;
 
-    let searchResults;
-    if (!searched.length) {
-      searchResults = this.props.slices.map(slice => {
+    // searched || all
+    const displayedSlices = () => {
+      const slices = this.props.searched.length ? this.props.searched : this.props.slices || [];
+      return slices.map(slice => {
         return (
-          <Card key={slice.sliceID} selectSlice={this.props.selectSlice} sliceID={slice.sliceID}>
+          <Card key={slice.sliceID} selectSlice={this.props.select} sliceID={slice.sliceID} liked={slice.liked} {...other}>
             <Fragment fragment={slice.fragment} />
-          </Card>
-        );
-      })
-    } else {
-      searchResults = searched.map(result => {
-        return (
-          <Card key={result._id} header={result._score} selectSlice={this.props.selectSlice} sliceID={result._source.sliceID}>
-            <Fragment fragment={result._source.fragment} />
           </Card>
         );
       })
@@ -31,7 +25,7 @@ export default class Slices extends Component {
 
     return (
       <div>
-        <pre>{searchResults}</pre>
+        <pre>{displayedSlices()}</pre>
       </div>
     );
   }
