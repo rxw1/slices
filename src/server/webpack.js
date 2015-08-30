@@ -11,19 +11,17 @@ const port = parseInt(process.env.PORT) + 1 || 3001;
 const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
 
 new WebpackDevServer(webpack(config), {
-  noInfo: false,
-  quiet: false,
+  // headers: {'Access-Control-Allow-Origin': '*'},
   publicPath: config.output.publicPath,
-  hot: true,
   contentBase: BASEURL,
   historyApiFallback: true,
   stats: { colors: true },
+  hot: true,
   lazy: false,
   inline: true,
-  // headers: {'Access-Control-Allow-Origin': '*'},
-  contentBase: 'http://' + host + ':' + port
+  noInfo: false,
+  quiet: false
 }).listen(port, host, function (err) {
-  if (err) { console.log(err); }
-  console.log('WebpackDevServer at %s:%s', host, port);
+  if (err) console.log(err);
   console.log(`WebpackDevServer at ${BASEURL}`);
 });
