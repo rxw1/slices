@@ -7,9 +7,6 @@ import { fetchLanguages } from '../shared/actions/languages';
 import { select } from '../shared/actions/slices';
 import configureStore from '../shared/store';
 
-import nunjucks from 'nunjucks';
-nunjucks.configure('src/shared', { autoescape: true });
-
 export default function render() {
   return function* () {
     const location = new Location(this.request.path, this.request.query);
@@ -48,11 +45,27 @@ export default function render() {
 
         var state = store.getState();
 
-        resolve(nunjucks.render('index.html', {
-          appString,
-          initialState: JSON.stringify(state),
-          env: process.env
-        }));
+        resolve(`
+          <!DOCTYPE html>
+            <head>
+              <meta charset="utf-8">
+              <meta http-equiv="x-ua-compatible" content="ie=edge">
+              <title>Slices</title>
+              <meta name="description" content="">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+              <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,200' type='text/css'>
+              <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
+              <link rel="stylesheet" href="/styles/tomorrow.css">
+              <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+            </head>
+            <body>
+              <div id="root">${appString}</div>
+              <script>window.__initialState = ${JSON.stringify(state)}</script>
+              <script src="${process.env.NODE_ENV === 'development' ? 'http://localhost:3001/js/app.js' : 'js/app.js'}" defer></script>
+            </body>
+          </html>
+        `);
       });
     })
   }
