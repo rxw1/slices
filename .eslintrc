@@ -9,25 +9,23 @@
     "mocha": true
   },
   "rules": {
-    "quotes": [2, "single"],
+    "block-scoped-var": 0,
+    "camelcase": 0,
+    "curly": false,
+    "dot-notation": [2, {"allowSnakeCase": true}],
     "eol-last": [2],
+    "no-alert": 0,
+    "no-debugger": false,
     "no-mixed-requires": [0],
     "no-underscore-dangle": [0],
-    "camelcase": 0,
-    "no-alert": 0,
-    "dot-notation": [2, {"allowSnakeCase": true}],
-    "curly": false,
-    "no-unused-expressions": false,
+    "no-unused-expressions": true,
     "no-use-before-define": false,
-    "no-debugger": false,
-
-    "block-scoped-var": 0,
     "padded-blocks": 0,
-
+    "quotes": [2, "single"],
     "react/display-name": 0,
     "react/jsx-boolean-value": 2,
-    "react/jsx-quotes": 2,
     "react/jsx-no-undef": 2,
+    "react/jsx-quotes": 2,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/no-did-mount-set-state": 2,
@@ -38,22 +36,7 @@
     "react/react-in-jsx-scope": 2,
     "react/self-closing-comp": 2,
     "react/wrap-multilines": 2,
-
-    "valid-jsdoc": 2,
-
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2,
-
-    // Disable until Flow supports let and const
-    "no-var": 0,
-    "vars-on-top": 0,
-
-    //Temporarirly disabled due to a possible bug in babel-eslint (todomvc example)
-    "block-scoped-var": 0,
-
-    // Temporarily disabled for test/* until babel/babel-eslint#33 is resolved
-    "padded-blocks": 0
+    "valid-jsdoc": 2
   },
   "ecmaFeatures": {
     "jsx": true,
