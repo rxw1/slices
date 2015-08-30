@@ -1,99 +1,105 @@
-import { get } from '../fetch';
-
 import {
-  FETCH_SLICES,
+  REQUEST_SLICES,
+  REQUEST_SLICES_SAMPLE,
+  REQUEST_SLICES_WITH_INSTANCES,
   RECEIVE_SLICES,
-
-  SELECT_SLICE,
-
-  RECEIVE_REFERENCES,
-  FETCH_REFERENCES,
-
-  CLEAR_SLICES,
-
   SEARCH_QUERY,
-  SEARCH_CLEAR,
-  SEARCH_RESPONSE,
-
-  LIKED,
-  UNLIKED,
-
-  SLICE_UPDATED
+  SELECT_SLICE,
+  TOGGLE_LIKE,
+  CLEAR_SLICES,
+  LIKE_SLICE,
+  UNLIKE_SLICE,
+  RECEIVE_SLICES_UPDATE,
+  REQUEST_LIKED_SLICES,
+  RECEIVE_SLICES_HITS
 } from './types';
 
-function receiveReferences(payload) {
-  return {
-    type: RECEIVE_REFERENCES,
-    payload: payload,
-    receivedAt: Date.now()
-  };
-}
+import { get, post } from '../fetch';
+
+// (1) before xhr response (this is what you order)
 
 function requestSlices(sliceID) {
   return {
-    type: FETCH_SLICES,
-    sliceID: sliceID
+    type: REQUEST_SLICES,
+    sliceID
   };
 }
 
-function requestSlicesWithInstances(sliceID) {
+function requestSlicesWithInstances() {
   return {
-    type: FETCH_SLICES,
-    sliceID: sliceID
+    type: REQUEST_SLICES_WITH_INSTANCES
   };
 }
 
-function requestReferences(sliceID) {
+function requestSlicesSample() {
   return {
-    type: FETCH_REFERENCES,
-    sliceID: sliceID
+    type: REQUEST_SLICES_SAMPLE
   };
 }
 
-function makeSelected(payload) {
+function requestLikedSlices() {
   return {
-    type: SELECT_SLICE,
-    payload: payload
+    type: REQUEST_LIKED_SLICES
   };
 }
 
-function markSlice(sliceID) {
-  return {
-    type: SLICE_MARKED,
-    sliceID: sliceID
-  };
-}
-
-function toggleLike(sliceID) {
-  return {
-    type: LIKED,
-    sliceID: sliceID
-  };
-}
+// (2) receive (this is what you get)
 
 function receiveSlices(payload) {
   return {
     type: RECEIVE_SLICES,
-    payload: payload,
+    payload,
     receivedAt: Date.now()
   };
 }
 
-function requestFragment(query) {
+function receiveSlicesHits(searchResult) {
   return {
-    type: SEARCH_QUERY,
-    payload: query
+    type: RECEIVE_SLICES_HITS,
+    payload: searchResult.hits.map(hit => hit._source),
+    receivedAt: Date.now(),
+    total: searchResult.total,
+    maxScore: searchResult.max_score
+  };
+}
+
+function receiveSlicesUpdate(payload) {
+  return {
+    type: RECEIVE_SLICES_UPDATE,
+    payload,
+    updatedAt: Date.now()
+  };
+}
+
+// => reducer caring about selected slices
+function selectSlice(sliceID) {
+  return {
+    type: SELECT_SLICE,
+    sliceID
+  };
+}
+
+// exported API functions a.k.a. action creators (I guess)
+
+export function select(sliceID) {
+  return dispatch => {
+    dispatch(selectSlice(sliceID));
+    return get(`/api/slices/${sliceID}/refs`)
+      .then(result => dispatch(receiveSlices(result)));
   }
 }
 
-function receiveFragment(payload) {
-  return {
-    type: SEARCH_RESPONSE,
-    payload: payload
+// request some slices
+
+export function slicesSample(count) {
+  return dispatch => {
+    dispatch(requestSlicesSample());
+    return get(`/api/slices/sample`)
+      .then(result => dispatch(receiveSlices(result)));
   }
 }
 
-export function fetchSlicesWithInstances() {
+export function slicesWithInstances() {
   return dispatch => {
     dispatch(requestSlicesWithInstances());
     return get(`/api/slices/withInstances`)
@@ -101,62 +107,137 @@ export function fetchSlicesWithInstances() {
   }
 }
 
+// search
+
 export function findFragment(query) {
   return dispatch => {
-    dispatch  (requestFragment(query));
+    dispatch(searchQuery(query));
     return get(`/api/slices/search/${query}`)
-      .then(result => dispatch(receiveFragment(result)));
+      .then(result => dispatch(receiveSlicesHits(result.hits)));
   }
 }
 
-export function cropSelectedSlice(sliceID) {
+function searchQuery(query) {
   return {
-    type: CLEAR_SLICES,
-    sliceID: sliceID
+    type: SEARCH_QUERY,
+    payload: query
   }
 }
 
-export function receiveUpdatedSlice(payload) {
-  return {
-    type: SLICE_UPDATED,
-    payload: payload
-  }
-}
+// like
 
-export function clearSearch() {
-  return {
-    type: SEARCH_CLEAR
-  }
-}
-
-export function selectSlice(sliceID) {
+export function like(sliceID) {
   return dispatch => {
-    dispatch(makeSelected(sliceID));
-    // dispatch(requestSlices(sliceID));
-    return get(`/api/slices/${sliceID}/refs`)
-      .then(result => dispatch(receiveReferences(result)));
+    dispatch(likeSlice(sliceID));
+    return post(`/api/slices/${sliceID}/like`)
+      .then(result => dispatch(receiveSlicesUpdate(result)));
   }
 }
 
-export function fetchReferences(sliceID) {
+export function likedSlices() {
   return dispatch => {
-    dispatch(requestReferences(sliceID));
-    return get(`/api/slices/${sliceID}/refs`)
-      .then(result => dispatch(receiveReferences(result)));
-  }
-}
-
-export function sampleSlices(count) {
-  return dispatch => {
-    dispatch(requestSlices(count));
-    return get(`/api/slices/sample${count ? (count ? 'count/' + count : '') : ''}`)
+    dispatch(requestLikedSlices());
+    return get(`/api/slices/liked`)
       .then(result => dispatch(receiveSlices(result)));
   }
 }
 
-export function upvoteSlice(sliceID) {
+export function getAllSlices() {
   return dispatch => {
-    return get(`/api/slices/${sliceID}/upvote`)
-      .then(result => dispatch(receiveUpdatedSlice(result)));
+    dispatch(requestSlices());
+    return get(`/api/slices`)
+      .then(result => dispatch(receiveSlices(result)));
   }
 }
+
+function likeSlice(sliceID) {
+  return {
+    type: LIKE_SLICE,
+    sliceID
+  }
+}
+
+function unlikeSlice(sliceID) {
+  return {
+    type: UNLIKE_SLICE,
+    sliceID
+  }
+}
+
+// clear stuff
+
+export function clear() {
+  return {
+    type: CLEAR_SLICES
+  }
+}
+
+
+
+
+// import {
+//   CLEAR_SLICES,
+//   FETCH_REFERENCES,
+//   FETCH_SLICES,
+//   LIKED,
+//   RECEIVE_REFERENCES,
+//   RECEIVE_SLICES,
+//   SEARCH_CLEAR,
+//   SEARCH_QUERY,
+//   SEARCH_RESPONSE,
+//   SELECT_SLICE,
+//   SLICE_UPDATED,
+//   UNLIKED
+// } from './types';
+
+// /*
+//   XHR requests happen in three stages:
+//   (1) action
+//   (2) request: 
+//   (3) receive: pass payload to reducer
+// */
+
+// function receiveReferences(payload) {
+//   return {
+//     type: RECEIVE_REFERENCES,
+//     payload: payload,
+//     receivedAt: Date.now()
+//   };
+// }
+
+// function requestReferences(sliceID) {
+//   return {
+//     type: FETCH_REFERENCES,
+//     sliceID: sliceID
+//   };
+// }
+
+// function markSlice(sliceID) {
+//   return {
+//     type: SLICE_MARKED,
+//     sliceID: sliceID
+//   };
+// }
+
+
+// export function clearSearch() {
+//   return {
+//     type: SEARCH_CLEAR
+//   }
+// }
+
+// // voting
+
+// export function upvoteSlice(sliceID) {
+//   return dispatch => {
+//     return get(`/api/slices/${sliceID}/upvote`)
+//       .then(result => dispatch(receiveUpdatedSlice(result)));
+//   }
+// }
+
+// export function receiveUpdatedSlice(payload) {
+//   return {
+//     type: SLICE_UPDATED,
+//     payload: payload
+//   }
+// }

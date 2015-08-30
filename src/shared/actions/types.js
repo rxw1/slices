@@ -20,22 +20,21 @@ export const SEARCH_CLEAR = 'SEARCH_CLEAR';
 export const SEARCH_CLEARED = 'SEARCH_CLEARED';
 export const SEARCH_QUERY = 'SEARCH_QUERY';
 export const SEARCH_RESPONSE = 'SEARCH_RESPONSE';
+export const RECEIVE_SLICES_HITS = 'RECEIVE_SLICES_HITS';
 
 // REFERENCES
-export const FETCH_REFERENCES = 'FETCH_REFERENCES';
+export const REQUEST_REFERENCES = 'REQUEST_REFERENCES';
 export const RECEIVE_REFERENCES = 'RECEIVE_REFERENCES';
 
 // SLICE
-export const FETCH_SLICE = 'FETCH_SLICE';
-export const FETCH_SLICES = 'FETCH_SLICES';
-export const RECEIVE_SLICE = 'RECEIVE_SLICE';
+export const REQUEST_SLICES = 'REQUEST_SLICES';
 export const RECEIVE_SLICES = 'RECEIVE_SLICES';
-export const SAMPLE_SLICES = 'SAMPLE_SLICES';
-export const SELECT_SLICE = 'SELECT_SLICE';
-export const SLICES_CLEARED = 'SLICES_CLEARED'; // remove all collected slices
-export const SELECTION_CLEARED = 'SELECTION_CLEARED'; // clear selected and references
+export const RECEIVE_SLICES_UPDATE = 'RECEIVE_SLICES_UPDATE';
 
-export const SLICE_UPDATED = 'SLICE_UPDATED'; // any slice update
+export const REQUEST_SLICES_WITH_INSTANCES = 'REQUEST_SLICES_WITH_INSTANCES'; // clear selected and references
+export const REQUEST_SLICES_SAMPLE = 'REQUEST_SLICES_SAMPLE';
+
+export const SELECT_SLICE = 'SELECT_SLICE';
 
 // UPVOTE/DOWNVOTE SLICES
 export const UPVOTE = 'UPVOTE';
@@ -44,6 +43,10 @@ export const DOWNVOTE = 'DOWNVOTE';
 // LIKE/UNLIKE SLICES
 export const LIKE = 'LIKE';
 export const UNLIKE = 'UNLIKE';
+export const TOGGLE_LIKE = 'TOGGLE_LIKE';
+export const LIKE_SLICE = 'LIKE_SLICE';
+export const UNLIKE_SLICE = 'UNLIKE_SLICE';
+export const REQUEST_LIKED_SLICES = 'REQUEST_LIKED_SLICES';
 
 // FILTER STUFF
 export const FILTER_WITH_INSTANCES = 'FILTER_WITH_INSTANCES';
@@ -56,3 +59,4 @@ export const FILTER_SELECTED = 'FILTER_SELECTED';
 // CLEAR STUFF
 export const CLEAR_SLICES = 'CLEAR_SLICES';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
+export const CLEAR_SELECT = 'CLEAR_SELECT';

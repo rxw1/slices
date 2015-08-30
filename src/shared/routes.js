@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Redirect } from 'react-router';
 import App from './containers/App';
 import Slices from './components/Slices';
-import Slice from './components/Slice';
 import SliceView from './components/SliceView';
 
 export default (

@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import Location from 'react-router/lib/Location';
 import routes from '../shared/routes';
 import { fetchLanguages } from '../shared/actions/languages';
-import { selectSlice, fetchSlice, fetchReferences } from '../shared/actions/slices';
+import { select } from '../shared/actions/slices';
 import configureStore from '../shared/store';
 
 import nunjucks from 'nunjucks';
@@ -21,7 +21,7 @@ export default function render() {
 
     if (sliceID) {
       console.log(`>>> getting initial state for ${sliceID} due to url param`);
-      yield store.dispatch(selectSlice(sliceID));
+      yield store.dispatch(select(sliceID));
     }
 
     this.body = yield new Promise(resolve => {

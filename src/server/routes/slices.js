@@ -80,9 +80,11 @@ export function getAllSlices () {
 // elasticsearch
 export function searchSlices () {
   return function* () {
+    console.log('lala');
     const { word } = this.params;
     const size = this.query.size ? `&size=${this.query.size}` : '';
     const path = `http://localhost:9200/slices/slices/_search?q=fragment:${word}${size}`;
+    console.log(path);
     const response = yield fetch(path);
     return response.body;
   }
@@ -116,6 +118,12 @@ export function getSlicesWithoutReferences () {
   }
 }
 
+export function getLikedSlices () {
+  return function* () {
+    return yield r.table('slices').filter(r.row('liked').eq(true));
+  }
+}
+
 export function upvoteSlice (sliceID) {
   return function* () {
     return yield r.table('slices').get(sliceID).update({
@@ -134,9 +142,12 @@ export function downvoteSlice (sliceID) {
 
 export function toggleLike (sliceID) {
   return function* () {
-    return yield r.table('slices').get(sliceID).update({
+    const updated = yield r.table('slices').get(sliceID).update({
       liked: r.row('liked').not().default(true)
+    }, {
+      returnChanges: true
     })
+    return updated.changes[0].new_val;
   };
 }
 
@@ -146,6 +157,7 @@ router
     this.body = yield getAllSlices();
   })
   .get('/search/:word', function* () {
+    console.log('search', this.params.word);
     this.body = yield searchSlices(this.params.word);
   })
   .get('/sample/:amount?', function* () {
@@ -159,6 +171,9 @@ router
   })
   .get('/withoutReferences', function* () {
     this.body = yield getSlicesWithoutReferences();
+  })
+  .get('/liked', function* () {
+    this.body = yield getLikedSlices();
   })
   .get('/:sliceID(\\d+)+/refs', function* () {
     this.body = yield getReferences(this.params.sliceID);
@@ -179,7 +194,7 @@ router
     this.body = yield insertSlice(this.request.body);
   });
 
-// TODO normalize and sanitize all params in an ordered manner, so that
+// TODO normalize and sanitize all params in a predictable manner, so that
 // parseInt(this.params...) isn't all over the place.
 
 const app = koa()

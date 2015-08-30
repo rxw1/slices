@@ -5,7 +5,7 @@ import {
 import uniq from 'lodash/array/uniq';
 import sort from 'lodash/collection/sortBy';
 
-export default function languages(state = [], action) {
+export function languages (state = [], action) {
   switch (action.type) {
     case RECEIVE_LANGUAGES:
       return uniq(sort([...state, ...action.payload]));
