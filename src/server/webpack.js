@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import config from '../../webpack.config';
 
-const host = process.env.HOST || '92.51.147.239';
+const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
 
 new WebpackDevServer(webpack(config), {

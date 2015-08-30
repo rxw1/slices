@@ -3,10 +3,15 @@
 var path = require('path');
 var webpack = require('webpack');
 
+const host = process.env.HOST || 'localhost';
+const port = parseInt(process.env.PORT) + 1 || 3001;
+
+var url = `http://${host}:${port}`;
+
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-dev-server/client?http://localhost:3001',
+    `webpack-dev-server/client?${url}`,
     'webpack/hot/only-dev-server',
     './src/client/app'
   ],
@@ -15,8 +20,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/public/js/'),
-    filename: 'app.min.js',
-    publicPath: 'http://localhost:3001/js/'
+    filename: 'app.js',
+    publicPath: `${url}/js/`
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
