@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import Location from 'react-router/lib/Location';
 import routes from '../shared/routes';
-import { fetchLanguages } from '../shared/actions/languages';
 import { select } from '../shared/actions/slices';
 import configureStore from '../shared/store';
 
@@ -11,8 +10,6 @@ export default function render() {
   return function* () {
     const location = new Location(this.request.path, this.request.query);
     const store = configureStore();
-
-    yield store.dispatch(fetchLanguages());
 
     const sliceID = parseInt(this.request.path.split('/').find(x => x.match(/^[0-9]+$/)));
 
