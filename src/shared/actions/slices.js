@@ -13,7 +13,9 @@ import {
   UNLIKE_SLICE,
   RECEIVE_SLICES_UPDATE,
   REQUEST_LIKED_SLICES,
-  RECEIVE_SLICES_HITS
+  RECEIVE_SLICES_HITS,
+  UPVOTE,
+  DOWNVOTE,
   CLEAR_SEARCH
 } from './types';
 
@@ -179,6 +181,38 @@ function unlikeSlice(sliceID) {
   return {
     type: UNLIKE_SLICE,
     sliceID
+  }
+}
+
+// upvote/downvote
+
+export function upvote(sliceID) {
+  return dispatch => {
+    dispatch(upvoteSlice(sliceID));
+    return post(`/api/slices/${sliceID}/upvote`)
+      .then(result => dispatch(receiveSlicesUpdate(result)));
+  }
+}
+
+export function downvote(sliceID) {
+  return dispatch => {
+    dispatch(downvoteSlice(sliceID));
+    return post(`/api/slices/${sliceID}/downvote`)
+      .then(result => dispatch(receiveSlicesUpdate(result)));
+  }
+}
+
+function upvoteSlice(sliceID) {
+  return {
+    type: UPVOTE,
+    sliceID: sliceID
+  }
+}
+
+function downvoteSlice(sliceID) {
+  return {
+    type: DOWNVOTE,
+    sliceID: sliceID
   }
 }
 

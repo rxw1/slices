@@ -38,12 +38,15 @@ export default class Card extends Component {
 
   render() {
     const heart = this.props.liked ? styles.barIconLoveStrong : styles.barIconLove;
-    const { sliceID, select, like, download } = this.props;
+    const { sliceID, select, like, download, upvote, downvote, upvotes } = this.props;
     return (
       <div style={styles.fragmentCard} className="mdl-card mdl-shadow--2dp">
         <div style={styles.cardBar} className="mdl-card__actions mdl-card--border">
           <div className='mdl-layout-spacer'></div>
           <i onClick={this.props.like.bind(this, sliceID)} style={heart} className="material-icons">favorite</i>
+          <span>{upvotes || ''}</span>
+          <i onClick={downvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_down</i>
+          <i onClick={upvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_up</i>
           <i onClick={download} style={styles.barIcon} className="material-icons">save</i>
           <i onClick={select} style={styles.barIcon} className="material-icons">add</i>
         </div>
@@ -60,7 +63,9 @@ export default class Card extends Component {
 Card.propTypes = {
   select: PropTypes.func.isRequired,
   like: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired
+  download: PropTypes.func.isRequired,
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired
 }
 
 Card.contextTypes = {
