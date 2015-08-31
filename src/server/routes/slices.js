@@ -65,7 +65,7 @@ export function insertSlice (slice) {
     console.log(slice);
     const exists = yield r.table('slices').getAll(slice.sliceID).count()
     if (!exists) {
-      return result = yield r.table('slices').insert(slice);
+      return yield r.table('slices').insert(slice);
     } else {
       return { error: `sliceID ${slice.sliceID} exists`};
     }
