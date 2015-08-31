@@ -1,6 +1,7 @@
 import {
   CLEAR_SLICES,
   CLEAR_SEARCH,
+  CLEAR_SELECT,
   RECEIVE_REFERENCES,
   RECEIVE_SLICES,
   RECEIVE_SLICES_UPDATE,
@@ -10,7 +11,8 @@ import {
   SEARCH_QUERY,
   SEARCH_RESPONSE,
   SELECT_SLICE,
-  RECEIVE_SLICES_HITS
+  RECEIVE_SLICES_HITS,
+  CLEAR_REFERENCES
 } from '../actions/types';
 
 import uniq from 'lodash/array/uniq';
@@ -35,7 +37,8 @@ export function slices(state = [], action) {
 
 export function references(state = [], action) {
   switch (action.type) {
-    case CLEAR_SLICES:
+    case CLEAR_SELECT:
+    case CLEAR_REFERENCES:
       return [];
     case RECEIVE_REFERENCES:
       return action.payload.map(reference => reference.sliceID);
@@ -46,8 +49,14 @@ export function references(state = [], action) {
 
 export function selected(state = [], action) {
   switch (action.type) {
-    case CLEAR_SLICES:
-      return [];
+    case CLEAR_SELECT:
+      if (action.hasOwnProperty('sliceID')) {
+        const idx = findIndex(state, sliceID => sliceID === action.sliceID);
+        state.splice(idx, 1, action.payload);
+        return [...state];
+      } else {
+        return [];
+      }
     case SELECT_SLICE:
       return uniq([...state, action.sliceID]);
     default:

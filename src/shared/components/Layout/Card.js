@@ -42,11 +42,25 @@ var styles = StyleSheet.create({
 export default class Card extends Component {
   constructor(props) {
     super(props);
+    this.selectOrUnselect = this.selectOrUnselect.bind(this);
+  }
+
+  selectOrUnselect() {
+    let func;
+    let icon;
+    if (this.props.isSelected) {
+      func = this.props.clearSelect;
+      icon = 'clear';
+    } else {
+      func = this.props.select;
+      icon = 'add';
+    }
+    return <i onClick={func.bind(this, sliceID)} style={styles.barIcon} className="material-icons">{icon}</i>;
   }
 
   render() {
     const heart = this.props.liked ? styles.barIconLoveStrong : styles.barIconLove;
-    const { sliceID, select, like, download, upvote, downvote, upvotes } = this.props;
+    const { sliceID, select, like, download, upvote, downvote, upvotes, clearSelect, isSelected } = this.props;
     return (
       <div style={styles.fragmentCard} className="mdl-card mdl-shadow--2dp">
 
@@ -55,7 +69,7 @@ export default class Card extends Component {
           <span>{upvotes || ''}</span>
           <i onClick={downvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_down</i>
           <i onClick={upvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_up</i>
-          <i onClick={select.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_capslock</i>
+          {this.selectOrUnselect}
         </div>
 
         <div style={styles.cardBar2} className="mdl-card__actions mdl-card--border">
@@ -78,7 +92,9 @@ Card.propTypes = {
   like: PropTypes.func.isRequired,
   download: PropTypes.func.isRequired,
   upvote: PropTypes.func.isRequired,
-  downvote: PropTypes.func.isRequired
+  downvote: PropTypes.func.isRequired,
+  clearSelect: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool.isRequired
 }
 
 Card.contextTypes = {

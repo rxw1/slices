@@ -15,10 +15,10 @@ export default class Slices extends Component {
 
     // searched || selected || all
     const displayedSlices = () => {
-      return (searched.length ? searched : selected.length ? selected : all).map(slice => {
+      return (searched.length ? searched : selected.length ? selected : all || []).map(slice => {
         const { sliceID, fragment } = slice;
         return (
-          <Card key={sliceID} {...slice} {...other}>
+          <Card key={sliceID} {...slice} {...other} isSelected={!_.findIndex(selected, {sliceID: sliceID})}>
             <Fragment fragment={fragment} />
           </Card>
         );
@@ -47,10 +47,10 @@ function mapStateToProps(state) {
   return {
     all: state.slices,
     searched: state.searched,
-    selected: [
+    selected: state.selected ? [
       ...state.selected.map(sliceID => _.find(state.slices, {sliceID: sliceID})),
       ...state.references.map(sliceID => _.find(state.slices, {sliceID: sliceID}))
-    ]
+    ] : undefined
   };
 }
 

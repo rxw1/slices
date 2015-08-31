@@ -45,7 +45,7 @@ export default class Header extends Component {
     if (!this.props.slices.length) return 'no slices, sorry.';
     const selectedSliceID = this.props.selected[0];
     const selectedSlice = find(this.props.slices, { sliceID: selectedSliceID });
-    return selectedSlice ? selectedSlice.fragment[0].split(' ')[0] : 'whoops';
+    return selectedSlice ? selectedSlice.fragment[0].split(' ')[0] : 'no selection';
   }
 
   render() {

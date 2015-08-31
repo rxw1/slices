@@ -16,7 +16,8 @@ import {
   RECEIVE_SLICES_HITS,
   UPVOTE,
   DOWNVOTE,
-  CLEAR_SEARCH
+  CLEAR_SEARCH,
+  CLEAR_SELECT
 } from './types';
 
 import { get, post } from '../fetch';
@@ -227,6 +228,18 @@ export function clearSlices() {
 export function clearSearch() {
   return {
     type: CLEAR_SEARCH
+  }
+}
+
+export function clearSelect() {
+  return {
+    type: CLEAR_SELECT
+  }
+}
+
+export function clearReferences() {
+  return {
+    type: CLEAR_REFERENCES
   }
 }
 
