@@ -69,7 +69,7 @@ export default class Card extends Component {
           <span>{upvotes || ''}</span>
           <i onClick={downvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_down</i>
           <i onClick={upvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_up</i>
-          {this.selectOrUnselect}
+          {this.selectOrUnselect()}
         </div>
 
         <div style={styles.cardBar2} className="mdl-card__actions mdl-card--border">
