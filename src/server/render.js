@@ -45,7 +45,13 @@ export default function render() {
         const host = process.env.HOST || 'localhost';
         const port = parseInt(process.env.PORT) + 1 || 3001;
         const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
-        const appPath = `${BASEURL}/js/${process.env.NODE_ENV === 'development' ? `app.js` : `app.min.js`}`;
+
+        // var getPath = f =>
+        //   `${BASEURL}/js/${process.env.NODE_ENV === 'development' ? `${f}.js` : `${f}.min.js`}`
+
+        function getPath(f) {
+          return `${BASEURL}/js/${process.env.NODE_ENV === 'development' ? `${f}.js` : `${f}.min.js`}`
+        }
 
         resolve(`
           <!DOCTYPE html>
@@ -65,7 +71,8 @@ export default function render() {
             <body>
               <div id="root">${appString}</div>
               <script>window.__initialState = ${JSON.stringify(state)}</script>
-              <script src="${appPath}" defer></script>
+              <script src="${getPath('common')}" defer></script>
+              <script src="${getPath('app')}" defer></script>
             </body>
           </html>
         `);

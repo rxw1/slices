@@ -3,17 +3,43 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var webpackPostcssTools = require('webpack-postcss-tools');
+var map = webpackPostcssTools.makeVarMap('src/shared/index.css');
+
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
 const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    `webpack-dev-server/client?${BASEURL}`,
-    'webpack/hot/only-dev-server',
-    './src/client/app'
-  ],
+  entry: {
+    main: [
+      `webpack-dev-server/client?${BASEURL}`,
+      'webpack/hot/only-dev-server',
+      './src/client/app'
+    ],
+    vendor: [
+      'bluebird',
+      'highlight.js',
+      'humps',
+      'isomorphic-fetch',
+      'lodash',
+      'methods',
+      'react',
+      'react-highlight',
+      'react-redux',
+      'react-router',
+      'react-style',
+      'redux',
+      'redux',
+      'redux-devtools',
+      'redux-form',
+      'redux-immutable',
+      'redux-logger',
+      'redux-thunk',
+      'sass'
+    ]
+  },
   cssnext: {
     browsers: 'last 2 versions'
   },
@@ -27,33 +53,48 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'common.js', Infinity),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
   ],
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js'],
+    packageMains: ['webpack', 'browser', 'web', 'style', 'main']
   },
   module: {
     loaders: [{
       test: /\.js$/,
       loaders: ['react-hot', 'babel'],
-      exclude: /node_modules/,
-      // include: __dirname
+      exclude: /node_modules/
     },{
       test: /\.jsx$/,
       loader: 'jsx'
     },
+    { test: /\.css$/, loader: 'style!css?importLoaders=1!postcss' },
     {
-      test: /\.css$/,
-      loader: 'style!css'
-    },
-    {
-      test: /\.less$/,
-      loader: 'style!css!less'
-    },
-    {
-      test: /\.scss$/,
-      // loader: 'style!css!sass'
-      // loader: 'style-loader!css-loader!cssnext-loader'
-      loader: 'style!css!sass'
-    }]
-  }
+      test: /\.((png)|(eot)|(woff)|(ttf)|(svg)|(gif))$/,
+      loader: 'file?name=/[hash].[ext]'
+    }
+    ]
+  },
+  postcss: [
+    webpackPostcssTools.prependTildesToImports,
+
+    require('postcss-custom-properties')({
+      variables: map.vars
+    }),
+
+    require('postcss-custom-media')({
+      extensions: map.media
+    }),
+
+    require('postcss-custom-selector')({
+      extensions: map.selector
+    }),
+
+    require('postcss-calc')()
+  ]
 };

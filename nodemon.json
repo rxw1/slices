@@ -1,5 +1,9 @@
 {
+  "verbose": false,
+  "watch": ["lib/"],
   "env": { "NODE_ENV": "development" },
-  "ext": "js html",
-  "watch": [ "lib/", "views/" ]
+  "ext": "js",
+  "_events": {
+    "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
+  }
 }

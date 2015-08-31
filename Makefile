@@ -6,8 +6,8 @@ LIB_JS=$(patsubst src/%.js, lib/%.js, $(SRC_JS))
 all: build
 
 #dev:; @NODE_ENV=development $(MAKE) -j5 webpack-server dev-server watch
-dev-server: $(LIB_JS); $(BIN)/nodemon --harmony
-webpack-server: $(LIB_JS); node --harmony ./lib/server/webpack
+dev-server: $(LIB_JS); $(BIN)/nodemon
+webpack-server: $(LIB_JS); node ./lib/server/webpack
 watch:; $(BIN)/babel src -d lib -e 0 -s inline -w
 
 build: js webpack

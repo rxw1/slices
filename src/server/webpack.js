@@ -20,7 +20,7 @@ new WebpackDevServer(webpack(config), {
   lazy: false,
   inline: true,
   noInfo: false,
-  quiet: false
+  quiet: true
 }).listen(port, host, function (err) {
   if (err) console.log(err);
   console.log(`WebpackDevServer at ${BASEURL}`);
