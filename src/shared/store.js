@@ -33,7 +33,6 @@ if (global.hasOwnProperty('window')) {
 	import { devTools, persistState } from 'redux-devtools';
 	enhancers.push(devTools());
 	enhancers.push(persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)));
-
   // persistState lets you write ?debug_session=<name> in address bar to
   // persist debug sessions
 }

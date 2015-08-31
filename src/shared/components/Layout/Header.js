@@ -94,5 +94,4 @@ Header.propTypes = {
   clearSlices: PropTypes.func.isRequired,
   clearSearch: PropTypes.func.isRequired,
   findFragment: PropTypes.func.isRequired,
-  getName: PropTypes.func.isRequired
 }

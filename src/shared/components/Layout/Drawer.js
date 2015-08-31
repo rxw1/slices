@@ -6,17 +6,11 @@ export default class Drawer extends Component {
   }
 
   render() {
-    const { slicesWithInstances, likedSlices, getAllSlices } = this.props;
-    // const languages = this.props.languages.map((language, idx) => {
-    //   return (
-    //     <a key={idx} className='mdl-navigation__link'>{language}</a>
-    //   );
-    // })
+    const { likedSlices, slicesWithInstances, getAllSlices } = this.props;
 
     return (
       <div className='mdl-layout__drawer'>
         <span className='mdl-layout-title'>Slices</span>
-
         <nav className='mdl-navigation'>
           <a className='mdl-navigation__link' onClick={likedSlices}>
             Liked Slices
@@ -34,10 +28,7 @@ export default class Drawer extends Component {
 }
 
 Drawer.propTypes = {
-  languages: PropTypes.array.isRequired,
   likedSlices: PropTypes.func.isRequired,
   slicesWithInstances: PropTypes.func.isRequired,
+  getAllSlices: PropTypes.func.isRequired
 }
-
-        // <nav className='mdl-navigation'>{languages}</nav>
-        // <span className='mdl-layout-title'><small>Languages</small></span>

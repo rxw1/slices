@@ -9,13 +9,21 @@ var styles = StyleSheet.create({
     minHeight: '0px',
     border: '2px solid #aaa'
   },
-  cardBar: {
-    // backgroundColor: 'rgba(165, 165, 165, 0.38)',
+  cardBar1: {
     alignItems: 'right',
     boxSizing: 'border-box',
     display: 'flex',
     height: '42px',
     position: 'absolute'
+  },
+  cardBar2: {
+    alignItems: 'right',
+    boxSizing: 'border-box',
+    display: 'flex',
+    height: '42px',
+    position: 'absolute',
+    top: '32px',
+    borderTop: 'none'
   },
   barIconLove: {
     width: '28px',
@@ -41,14 +49,19 @@ export default class Card extends Component {
     const { sliceID, select, like, download, upvote, downvote, upvotes } = this.props;
     return (
       <div style={styles.fragmentCard} className="mdl-card mdl-shadow--2dp">
-        <div style={styles.cardBar} className="mdl-card__actions mdl-card--border">
+
+        <div style={styles.cardBar1} className="mdl-card__actions mdl-card--border">
           <div className='mdl-layout-spacer'></div>
-          <i onClick={this.props.like.bind(this, sliceID)} style={heart} className="material-icons">favorite</i>
           <span>{upvotes || ''}</span>
           <i onClick={downvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_down</i>
           <i onClick={upvote.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_arrow_up</i>
+          <i onClick={select.bind(this, sliceID)} style={styles.barIcon} className="material-icons">keyboard_capslock</i>
+        </div>
+
+        <div style={styles.cardBar2} className="mdl-card__actions mdl-card--border">
+          <div className='mdl-layout-spacer'></div>
+          <i onClick={like.bind(this, sliceID)} style={heart} className="material-icons">favorite</i>
           <i onClick={download} style={styles.barIcon} className="material-icons">save</i>
-          <i onClick={select} style={styles.barIcon} className="material-icons">add</i>
         </div>
 
         <div className="mdl-card__supporting-text mdl-card--expand">
@@ -70,14 +83,4 @@ Card.propTypes = {
 
 Card.contextTypes = {
   router: PropTypes.object.isRequired
-};
-
-          // <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          //   select
-          // </a>
-          // <a onClick={like} className="mdl-button mdl-js-button mdl-js-ripple-effect">
-          //   like
-          // </a>
-          // <a onClick={select} className="mdl-button mdl-js-button mdl-js-ripple-effect">
-          //   download
-          // </a>
+}
