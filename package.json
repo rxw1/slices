@@ -1,7 +1,7 @@
 {
   "name": "Slices",
-  "version": "0.0.1",
-  "description": "Slices of stuff",
+  "version": "0.0.2",
+  "description": "Fragnix slices",
   "scripts": {
     "prestart": "make clean && make -j5 build",
     "start": "node lib/server",
