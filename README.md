@@ -11,8 +11,8 @@ Make sure RethinkDB and ElasticSearch are correctly set up and running.
 ```shell
 npm install
 npm run dev
-curl localhost:3000/slices/__setup
-bin/elasticsearch-init.sh
+curl localhost:3000/setup/db
+curl localhost:3000/setup/es
 ```
 
 ##### Insert slices into the database
