@@ -3,7 +3,7 @@ import bodyparser from 'koa-bodyparser';
 import compose from 'koa-compose';
 
 import rethinkdbdash from 'rethinkdbdash';
-let r = rethinkdbdash({db: 'slices'});
+let r = rethinkdbdash({db: 'slices', silent: true});
 
 import Router from 'koa-router';
 let router = new Router({

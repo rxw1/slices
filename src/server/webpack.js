@@ -23,5 +23,7 @@ new WebpackDevServer(webpack(config), {
   quiet: true
 }).listen(port, host, function (err) {
   if (err) console.log(err);
-  console.log(`WebpackDevServer at ${BASEURL}`);
+  import chalk from 'chalk';
+  const d = Date().split(' ');
+console.log(`${[d[2], d[1], d[4]].join(' ')} - ${chalk.magenta('[webpack]', BASEURL)}`);
 });

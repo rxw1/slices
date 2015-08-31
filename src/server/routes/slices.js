@@ -5,7 +5,7 @@ import compose from 'koa-compose';
 import _ from 'lodash';
 
 import rethinkdbdash from 'rethinkdbdash';
-let r = rethinkdbdash({db: 'slices'});
+let r = rethinkdbdash({db: 'slices', silent: true});
 
 import Router from 'koa-router';
 let router = new Router({

@@ -40,4 +40,8 @@ import render from './render';
 app.use(render());
 
 app.listen(3000);
-console.log('koa at localhost:3000');
+
+import chalk from 'chalk';
+const d = Date().split(' ');
+const port = parseInt(process.env.PORT) + 1 || 3001;
+console.log(`${[d[2], d[1], d[4]].join(' ')} - ${chalk.blue('[koa]', 'http://localhost:' + port)}`);

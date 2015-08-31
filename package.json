@@ -33,6 +33,7 @@
   "dependencies": {
     "babel-runtime": "^5.8.20",
     "bluebird": "^2.9.34",
+    "chalk": "^1.1.1",
     "co-fs": "^1.2.0",
     "filequeue": "^0.5.0",
     "graceful-fs": "^4.1.2",
