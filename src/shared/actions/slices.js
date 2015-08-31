@@ -217,6 +217,16 @@ function downvoteSlice(sliceID) {
   }
 }
 
+// download
+
+export function download(sliceID) {
+  return dispatch => {
+    dispatch(downloadSlice(sliceID));
+    return get(`/api/slices/${sliceID}/download`)
+      .then(result => dispatch(receiveTarball(result)));
+  }
+}
+
 // clear stuff
 
 export function clearSlices() {
