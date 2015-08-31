@@ -3,6 +3,8 @@ import {
   REQUEST_SLICES_SAMPLE,
   REQUEST_SLICES_WITH_INSTANCES,
   RECEIVE_SLICES,
+  REQUEST_REFERENCES,
+  RECEIVE_REFERENCES,
   SEARCH_QUERY,
   SELECT_SLICE,
   TOGGLE_LIKE,
@@ -43,12 +45,26 @@ function requestLikedSlices() {
   };
 }
 
+function requestReferences() {
+  return {
+    type: REQUEST_REFERENCES
+  }
+}
+
 // (2) receive (this is what you get)
 
 function receiveSlices(payload) {
   return {
     type: RECEIVE_SLICES,
     payload,
+    receivedAt: Date.now()
+  };
+}
+
+function receiveReferences(payload) {
+  return {
+    type: RECEIVE_REFERENCES,
+    payload: payload,
     receivedAt: Date.now()
   };
 }
@@ -84,8 +100,9 @@ function selectSlice(sliceID) {
 export function select(sliceID) {
   return dispatch => {
     dispatch(selectSlice(sliceID));
+    dispatch(requestReferences(sliceID));
     return get(`/api/slices/${sliceID}/refs`)
-      .then(result => dispatch(receiveSlices(result)));
+      .then(result => dispatch(receiveReferences(result)));
   }
 }
 
