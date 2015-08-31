@@ -131,17 +131,23 @@ export function getLikedSlices () {
 
 export function upvoteSlice (sliceID) {
   return function* () {
-    return yield r.table('slices').get(sliceID).update({
+    const updated = yield r.table('slices').get(sliceID).update({
       upvotes: r.row('upvotes').add(1).default(1)
+    }, {
+      returnChanges: true
     })
+    return updated.changes[0].new_val;
   };
 }
 
 export function downvoteSlice (sliceID) {
   return function* () {
-    return yield r.table('slices').get(sliceID).update({
+    const updated = yield r.table('slices').get(sliceID).update({
       upvotes: r.row('upvotes').sub(1).default(-1)
+    }, {
+      returnChanges: true
     })
+    return updated.changes[0].new_val;
   };
 }
 
