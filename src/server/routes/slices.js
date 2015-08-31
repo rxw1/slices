@@ -14,6 +14,8 @@ import 'isomorphic-fetch';
 
 import _ from 'lodash';
 
+import setup from '../middleware/setup';
+
 // get a sample of n slices w/o references
 export function sampleSlices (amount = 3) {
   return function* () {
@@ -162,6 +164,9 @@ export function toggleLike (sliceID) {
 router
   .get('/', function* () {
     this.body = yield getAllSlices();
+  })
+  .get('/__setup', function* () {
+    yield setup();
   })
   .get('/search/:word', function* () {
     console.log('search', this.params.word);

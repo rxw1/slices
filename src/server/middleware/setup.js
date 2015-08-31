@@ -3,10 +3,6 @@
 let _ = require('lodash');
 let fs = require('co-fs');
 let path = require('path');
-let Promise = require('bluebird');
-
-var FileQueue = require('filequeue');
-var fq = new FileQueue(100);
 
 const config = {
   db: 'slices',
@@ -19,23 +15,6 @@ const sidx = {
 };
 
 let r = require('rethinkdbdash')({db: config.db});
-
-// function readDir() {
-//   function *(next) {
-//     yield fs.readdir(path.join(__dirname, 'slices'));
-//   }
-// }
-
-// function handleFiles() {
-//   return function*() {
-//     fs.readdir(path.join(__dirname, 'slices'), function(err, files) {
-//       return files.map(function(file) {
-//         let json = fs.readFile(path.join(__dirname, 'slices', file), {encoding: 'utf8'});
-//         return JSON.parse(json);
-//       });
-//     });
-//   }
-// }
 
 function run() {
   return function* run() {
@@ -77,23 +56,6 @@ function run() {
 
       yield secondaryIndices;
 
-      // console.log('reading files...');
-      //// let slices = yield handleFiles();
-      //// console.log('slices count', slices.length);
-
-      // let files = yield fs.readdir(path.join(__dirname, 'slices'));
-      // console.log('files count:', files.length);
-
-      // let lessFiles = files.slice(0, 8000); // FIXME
-
-      // let slices = yield lessFiles.map(function *(file) {
-      //   let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
-      //   return JSON.parse(slice);
-      // })
-
-      // let result = yield r.table('slices').insert(slices);
-      console.log('done');
-      // this.body = result;
       this.status = 200;
 
     } catch(err) {
@@ -101,18 +63,6 @@ function run() {
     }
   };
 }
-
-// function insertSlice(file) {
-//   return function* () {
-//     try {
-//       let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
-//       let result = yield r.table('slices').insert(slice);
-//       console.log(result);
-//     } catch(err) {
-//       console.log(err.message);
-//     }
-//   }
-// }
 
 module.exports = {
   run: run // create database and tables, populate w/ data
