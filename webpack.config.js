@@ -4,7 +4,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 var webpackPostcssTools = require('webpack-postcss-tools');
-var map = webpackPostcssTools.makeVarMap('src/shared/index.css');
+var map = webpackPostcssTools.makeVarMap('src/index.css');
 
 var CompressionPlugin = require("compression-webpack-plugin");
 
@@ -18,7 +18,7 @@ module.exports = {
     main: [
       `webpack-dev-server/client?${BASEURL}`,
       'webpack/hot/only-dev-server',
-      './src/client/app'
+      './src/client'
     ],
     vendor: [
       'bluebird',

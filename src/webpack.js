@@ -4,7 +4,7 @@ import 'babel-core/polyfill';
 
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import config from '../../webpack.config';
+import config from '../webpack.config';
 
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;

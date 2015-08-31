@@ -7,12 +7,12 @@ import React from 'react';
 import { history } from 'react-router/lib/BrowserHistory';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import routes from '../shared/routes';
+import routes from './routes';
 
 // React components for Redux DevTools
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
-import configureStore from '../shared/store';
+import configureStore from './store';
 const store = configureStore(window.__initialState);
 
 function renderRouter() {
