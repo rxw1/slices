@@ -1,36 +1,57 @@
 ### Work in progress. Not usable for work, just for play.
 ---
-Install dependencies first.
+##### Requirements
+
+- RethinkDB 2.1.2
+- ElasticSearch 1.7.1
+
+##### Setup
+Make sure RethinkDB and ElasticSearch are correctly set up and running.
 
 ```shell
 npm install
-```
-
-Make sure RethinkDB is set up and running. There's a script to setup our database and tables:
-
-```shell
-bin/setup
-```
-
-Start up the server:
-
-```shell
 npm run dev
+curl localhost:3000/slices/__setup
+bin/elasticsearch-init.sh
 ```
+
+##### Insert slices into the database
+
+You can add slices to the database by sending a POST request to `api/slices`, e.g.
+
+```shell
+curl -XPOST localhost:3000/api/slices -H "Content-Type: application/json" -d "$(cat ./slice)"`.
+```
+or
+```shell
+find slices -type f | while read -r slice; do
+  xpost api/slices -H "Content-Type: application/json" -d "$(cat $slice)"
+done
+```
+
+##### Copy some stylesheets around (sorry!)
 
 ```shell
 mkdir public && cp -r node_modules/highlight.js/styles public
 ```
 
-To insert slices into the database, post them to `/api/slices`:
-
-```shell
-for slice in slices/*; do
-  curl -s -XPOST -H "Content-Type: application/json" -d "$(cat $slice)" localhost:3000/api/slices
-done
-```
-
 If things went well, the client should be reachable at `localhost:3000/slices`. You can query the API on e.g. `localhost:3000/api/slices`. See [src/server/routes/slices.js](https://github.com/rwilhelm/slices/blob/master/src/server/routes/slices.js) for some of the available routes.
+
+* GET `api/slices/sample` get three random slices
+* GET `api/slices/sample/42`
+* GET `api/slices/1719479834788995000` get a slice and all its dependencies
+* GET `api/slices/1719479834788995000/refs` get references only
+
+* GET `api/slices/search/hexquad` query elasticsearch to return slices with matching fragments
+
+* POST `api/slices/1719479834788995000/upvote`
+* POST `api/slices/1719479834788995000/downvote`
+* POST `api/slices/1719479834788995000/like`
+
+* GET `api/slices/liked` get all liked slices
+* GET `api/slices/withReferences` get all slices w/ references
+* GET `api/slices/withoutReferences` get all slices w/o references
+* GET `api/slices/withInstances` get all liked w/ instances
 
 ---
 
