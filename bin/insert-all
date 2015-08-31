@@ -1,9 +1,0 @@
-#!/usr/local/bin/zsh -e
-
-SLICES=$1
-
-test -d $SLICES || (echo "$SLICES is not a directory"; exit 1)
-
-find $SLICES -type f -name '[0-9]*' | while read -r slice; do
-	bin/insert $slice
-done
