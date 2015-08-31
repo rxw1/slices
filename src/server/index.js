@@ -7,6 +7,9 @@ import koa from 'koa';
 const app = koa();
 export default app;
 
+import compress from 'koa-compress';
+app.use(compress());
+
 import serve from 'koa-static';
 app.use(serve('public'));
 
@@ -23,9 +26,6 @@ if (require.main === module) {
 
 import helmet from 'koa-helmet';
 app.use(helmet());
-
-import compress from 'koa-compress';
-app.use(compress());
 
 import favicon from 'koa-favicon';
 app.use(favicon());

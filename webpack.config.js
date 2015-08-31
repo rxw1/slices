@@ -6,6 +6,8 @@ var webpack = require('webpack');
 var webpackPostcssTools = require('webpack-postcss-tools');
 var map = webpackPostcssTools.makeVarMap('src/shared/index.css');
 
+var CompressionPlugin = require("compression-webpack-plugin");
+
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
 const BASEURL = global.hasOwnProperty('window') ? '' : `http://${host}:${port}`;
@@ -54,10 +56,13 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'common.js', Infinity),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+    new webpack.optimize.UglifyJsPlugin(),
+    new CompressionPlugin({
+        asset: "{file}.gz",
+        algorithm: "gzip",
+        regExp: /\.js$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
     })
   ],
   resolve: {
