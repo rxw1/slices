@@ -1,12 +1,12 @@
 import {
   CLEAR_SLICES,
+  CLEAR_SEARCH,
   RECEIVE_REFERENCES,
   RECEIVE_SLICES,
   RECEIVE_SLICES_UPDATE,
   REQUEST_SLICES,
   REQUEST_SLICES_SAMPLE,
   REQUEST_SLICES_WITH_INSTANCES,
-  SEARCH_CLEAR,
   SEARCH_QUERY,
   SEARCH_RESPONSE,
   SELECT_SLICE,
@@ -35,6 +35,8 @@ export function slices(state = [], action) {
 
 export function references(state = [], action) {
   switch (action.type) {
+    case CLEAR_SLICES:
+      return [];
     case RECEIVE_REFERENCES:
       return action.payload.map(reference => reference.sliceID);
     default:
@@ -44,6 +46,8 @@ export function references(state = [], action) {
 
 export function selected(state = [], action) {
   switch (action.type) {
+    case CLEAR_SLICES:
+      return [];
     case SELECT_SLICE:
       return uniq([...state, action.sliceID]);
     default:
@@ -53,11 +57,9 @@ export function selected(state = [], action) {
 
 export function searched(state = [], action) {
   switch (action.type) {
-    case CLEAR_SLICES:
-      return [];
     case SEARCH_RESPONSE:
       return [...action.payload.hits.hits];
-    case SEARCH_CLEAR:
+    case CLEAR_SEARCH:
       return [];
     case RECEIVE_SLICES_HITS:
       return [...action.payload];

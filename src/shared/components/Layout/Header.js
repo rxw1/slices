@@ -35,7 +35,7 @@ export default class Header extends Component {
     if (q.target.value) {
       this.props.findFragment(q.target.value);
     } else {
-      this.props.clear();
+      this.props.clearSearch();
     }
   }
 
@@ -49,7 +49,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { selected, slicesSample, clear } = this.props;
+    const { selected, slicesSample, clearSlices } = this.props;
 
     // FIXME for now just get the first sliceID of the selection props array.
     // instead it should be possible to select multiple slices. for that we
@@ -78,7 +78,7 @@ export default class Header extends Component {
               sample
             </button>
 
-            <button onClick={clear} className="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <button onClick={clearSlices} className="mdl-button mdl-js-button mdl-js-ripple-effect">
               clear
             </button>
           </nav>
@@ -92,6 +92,7 @@ export default class Header extends Component {
 Header.propTypes = {
   slicesSample: PropTypes.func.isRequired,
   clearSlices: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired,
   findFragment: PropTypes.func.isRequired,
   getName: PropTypes.func.isRequired
 }

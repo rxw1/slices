@@ -14,6 +14,7 @@ import {
   RECEIVE_SLICES_UPDATE,
   REQUEST_LIKED_SLICES,
   RECEIVE_SLICES_HITS
+  CLEAR_SEARCH
 } from './types';
 
 import { get, post } from '../fetch';
@@ -183,9 +184,15 @@ function unlikeSlice(sliceID) {
 
 // clear stuff
 
-export function clear() {
+export function clearSlices() {
   return {
     type: CLEAR_SLICES
+  }
+}
+
+export function clearSearch() {
+  return {
+    type: CLEAR_SEARCH
   }
 }
 
