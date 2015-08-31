@@ -2,8 +2,6 @@ import koa from 'koa';
 import bodyparser from 'koa-bodyparser';
 import compose from 'koa-compose';
 
-import _ from 'lodash';
-
 import rethinkdbdash from 'rethinkdbdash';
 let r = rethinkdbdash({db: 'slices', silent: true});
 
@@ -14,9 +12,7 @@ let router = new Router({
 
 import 'isomorphic-fetch';
 
-import chain from 'lodash/chain';
-import uniq from 'lodash/array/uniq';
-import remove from 'lodash/array/remove';
+import _ from 'lodash';
 
 // get a sample of n slices w/o references
 export function sampleSlices (amount = 3) {
@@ -40,7 +36,7 @@ export function getSlices (sliceIDs, slices = []) {
 
     slices.push(...result);
 
-    let refIDs = chain(result)
+    let refIDs = _.chain(result)
       .pluck('uses')
       .flatten()
       .pluck('reference.otherSlice')
@@ -57,7 +53,7 @@ export function getSlices (sliceIDs, slices = []) {
     // on every sliceID and never fetch anything we already have? Afaict there
     // are rarely more than 1-2 duplicates per run.
 
-    return uniq(slices, 'sliceID');
+    return _.uniq(slices, 'sliceID');
   }
 }
 
@@ -100,7 +96,7 @@ export function getReferences (sliceIDs) {
   return function* () {
     let slices = yield getSlices(parseInt(this.params.sliceID))
     // TODO avoid getting duplicates
-    remove(slices, {sliceID: parseInt(this.params.sliceID)});
+    _.remove(slices, {sliceID: parseInt(this.params.sliceID)});
     return slices;
   }
 }
