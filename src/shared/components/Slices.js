@@ -7,17 +7,19 @@ import * as actions from '../actions/slices';
 import Card from '../components/Layout/Card';
 import Fragment from '../components/Fragment';
 
+import _ from 'lodash';
+
 export default class Slices extends Component {
   render() {
-    const { ...other } = this.props;
+    const { all, searched, selected, ...other } = this.props;
 
-    // searched || all
+    // searched || selected || all
     const displayedSlices = () => {
-      const slices = this.props.searched.length ? this.props.searched : this.props.slices || [];
-      return slices.map(slice => {
+      return (searched.length ? searched : selected.length ? selected : all).map(slice => {
+        const { sliceID, fragment } = slice;
         return (
-          <Card key={slice.sliceID} selectSlice={this.props.select} sliceID={slice.sliceID} liked={slice.liked} {...other}>
-            <Fragment fragment={slice.fragment} />
+          <Card key={sliceID} {...slice} {...other}>
+            <Fragment fragment={fragment} />
           </Card>
         );
       })
@@ -36,13 +38,19 @@ Slices.contextTypes = {
 };
 
 Slices.propTypes = {
-  slices: PropTypes.array.isRequired
+  all: PropTypes.array.isRequired,
+  searched: PropTypes.array,
+  selected: PropTypes.array
 };
 
 function mapStateToProps(state) {
   return {
-    slices: state.slices,
-    searched: state.searched
+    all: state.slices,
+    searched: state.searched,
+    selected: [
+      ...state.selected.map(sliceID => _.find(state.slices, {sliceID: sliceID})),
+      ...state.references.map(sliceID => _.find(state.slices, {sliceID: sliceID}))
+    ]
   };
 }
 
