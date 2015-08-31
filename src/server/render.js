@@ -64,7 +64,7 @@ export default function render() {
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
               <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,200' type='text/css'>
-              <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
+              <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.brown-pink.min.css">
               <link rel="stylesheet" href="/styles/tomorrow.css">
               <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
             </head>
