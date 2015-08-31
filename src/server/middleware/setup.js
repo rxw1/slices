@@ -77,24 +77,24 @@ function run() {
 
       yield secondaryIndices;
 
-      console.log('reading files...');
-      // let slices = yield handleFiles();
-      // console.log('slices count', slices.length);
+      // console.log('reading files...');
+      //// let slices = yield handleFiles();
+      //// console.log('slices count', slices.length);
 
-      let files = yield fs.readdir(path.join(__dirname, 'slices'));
-      console.log('files count:', files.length);
+      // let files = yield fs.readdir(path.join(__dirname, 'slices'));
+      // console.log('files count:', files.length);
 
-      let lessFiles = files.slice(0, 8000); // FIXME
+      // let lessFiles = files.slice(0, 8000); // FIXME
 
-      let slices = yield lessFiles.map(function *(file) {
-        let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
-        return JSON.parse(slice);
-      })
+      // let slices = yield lessFiles.map(function *(file) {
+      //   let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
+      //   return JSON.parse(slice);
+      // })
 
-      let result = yield r.table('slices').insert(slices);
+      // let result = yield r.table('slices').insert(slices);
       console.log('done');
-      this.body = result;
-      // this.status = 200;
+      // this.body = result;
+      this.status = 200;
 
     } catch(err) {
       throw (err);
@@ -102,17 +102,17 @@ function run() {
   };
 }
 
-function insertSlice(file) {
-  return function* () {
-    try {
-      let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
-      let result = yield r.table('slices').insert(slice);
-      console.log(result);
-    } catch(err) {
-      console.log(err.message);
-    }
-  }
-}
+// function insertSlice(file) {
+//   return function* () {
+//     try {
+//       let slice = yield fs.readFile(path.join(__dirname, 'slices', file), 'utf8');
+//       let result = yield r.table('slices').insert(slice);
+//       console.log(result);
+//     } catch(err) {
+//       console.log(err.message);
+//     }
+//   }
+// }
 
 module.exports = {
   run: run // create database and tables, populate w/ data
