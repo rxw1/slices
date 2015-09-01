@@ -11,6 +11,7 @@
 */
 
 import { createStore, applyMiddleware, compose } from 'redux';
+import reducers from './reducers';
 
 let middleware = [];
 let enhancers = [];
@@ -37,9 +38,18 @@ if (global.hasOwnProperty('window')) {
   // persist debug sessions
 }
 
-import reducers from './reducers';
-export default initialState => compose(
-	applyMiddleware(...middleware),
-	...enhancers,
-	createStore
-)(reducers, initialState);
+export default initialState => {
+	const store = compose(
+		applyMiddleware(...middleware),
+		...enhancers,
+	)(createStore)(reducers, initialState);
+
+	if (module.hot) {
+		module.hot.accept('./reducers', () => {
+		  const nextRootReducer = require('./reducers');
+		  store.replaceReducer(nextRootReducer);
+		});
+	}
+
+	return store;
+};
