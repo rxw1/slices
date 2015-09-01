@@ -5,7 +5,7 @@ import StyleSheet from 'react-style';
 var styles = StyleSheet.create({
   layout: {
     backgroundColor: '#D2CCC6',
-    'font': '15px Roboto Mono'
+    'font': '15px Hack'
   }
 });
 

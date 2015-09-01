@@ -12,15 +12,20 @@ var styles = StyleSheet.create({
     outline: 'none',
     borderBottom: '2px solid #777',
     color: '#333',
-    fontFamily: 'Roboto Mono',
+    fontFamily: 'Hack',
   },
   inputContainer: {
     width: '136px',
+    marginRight: '8px'
   },
   logo: {
     fontWeight: '400',
-    fontFamily: 'Roboto Mono',
+    fontFamily: 'Hack',
     color: '#333',
+  },
+  button: {
+    fontFamily: 'Hack',
+    fontSize: '15px'
   }
 });
 
@@ -74,11 +79,11 @@ export default class Header extends Component {
           </div>
 
           <nav className='mdl-navigation'>
-            <button onClick={slicesSample} className="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <button style={styles.button} onClick={slicesSample} className="mdl-button mdl-js-button mdl-js-ripple-effect">
               sample
             </button>
 
-            <button onClick={clearSlices} className="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <button style={styles.button} onClick={clearSlices} className="mdl-button mdl-js-button mdl-js-ripple-effect">
               clear
             </button>
           </nav>

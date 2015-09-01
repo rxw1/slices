@@ -8,7 +8,15 @@ var styles = StyleSheet.create({
     margin: '0'
   },
   chunk: {
-    marginBottom: '1.5em'
+    marginBottom: '1.5em',
+    fontFamily: 'Hack',
+    fontSize: '13px',
+    lineHeight: '1.4em'
+  },
+  chunkLast: {
+    fontFamily: 'Hack',
+    fontSize: '13px',
+    lineHeight: '1.4em'
   }
 });
 
@@ -18,8 +26,12 @@ export default class Fragment extends Component {
   }
 
   render() {
-    const fragment = this.props.fragment.map((chunk, idx) => {
-      return <div key={idx} style={styles.chunk}>{chunk}</div>;
+    const fragment = this.props.fragment.map((chunk, idx, arr) => {
+      if (idx === arr.length - 1) {
+        return <div key={idx} style={styles.chunkLast}>{chunk}</div>;
+      } else {
+        return <div key={idx} style={styles.chunk}>{chunk}</div>;
+      }
     });
 
     return (

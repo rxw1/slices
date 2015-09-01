@@ -1,3 +1,7 @@
-div {
-	border: 3px solid #E60EAE;
+* {
+	font-family: Hack, monospace;
+}
+
+.mdl-button {
+	font-family: Hack, monospace !important;
 }
