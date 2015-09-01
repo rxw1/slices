@@ -8,8 +8,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import routes from './routes';
 
-import { createHistory } from 'history';
-var history = createHistory();
+import { history } from 'react-router/lib/BrowserHistory';
 
 
 // React components for Redux DevTools
