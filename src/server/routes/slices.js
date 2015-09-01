@@ -14,7 +14,7 @@ import 'isomorphic-fetch';
 
 import _ from 'lodash';
 
-import setup from '../middleware/setup';
+import setup from '../middleware/database-setup';
 
 // get a sample of n slices w/o references
 export function sampleSlices (amount = 3) {

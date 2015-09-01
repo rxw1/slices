@@ -56,6 +56,7 @@
     "material-design-lite": "^1.0.4",
     "methods": "^1.1.1",
     "normalizr": "^1.0.0",
+    "postcss-calc": "^5.0.0",
     "postcss-custom-media": "^5.0.0",
     "postcss-custom-properties": "^5.0.0",
     "postcss-custom-selector": "^1.0.0",

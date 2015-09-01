@@ -7,7 +7,7 @@ all: build
 
 #dev:; @NODE_ENV=development $(MAKE) -j5 webpack-server dev-server watch
 dev-server: $(LIB_JS); $(BIN)/nodemon
-webpack-server: $(LIB_JS); node ./lib/server/webpack
+webpack-server: $(LIB_JS); node ./lib/webpack
 watch:; $(BIN)/babel src -d lib -e 0 -s inline -w
 
 build: js webpack
