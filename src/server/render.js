@@ -5,9 +5,6 @@ import createLocation from 'history/lib/createLocation';
 import routes from '../routes';
 import { select } from '../actions/slices';
 import configureStore from '../store';
-// import { createHistory } from 'history';
-// var history = createHistory();
-
 
 export default function render() {
   return function* () {
