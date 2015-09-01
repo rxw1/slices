@@ -10,7 +10,6 @@ import routes from './routes';
 
 import { history } from 'react-router/lib/BrowserHistory';
 
-
 // React components for Redux DevTools
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 

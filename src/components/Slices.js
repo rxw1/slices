@@ -16,7 +16,7 @@ export default class Slices extends Component {
     // searched || selected || all
     const displayedSlices = () => {
       return (searched.length ? searched : selected.length ? selected : all || []).map(slice => {
-        const { sliceID, fragment } = slice;
+        const { sliceID, fragment } = slice; // FIXME sliceID undefined when clearing before unselecting
         return (
           <Card key={sliceID} {...slice} {...other} isSelected={!_.findIndex(selected, {sliceID: sliceID})}>
             <Fragment fragment={fragment} />
