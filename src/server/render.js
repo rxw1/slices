@@ -1,14 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import Location from 'react-router/lib/Location';
+import createLocation from 'history/lib/createLocation';
 import routes from '../routes';
 import { select } from '../actions/slices';
 import configureStore from '../store';
 
 export default function render() {
   return function* () {
-    const location = new Location(this.request.path, this.request.query);
+    const location = new createLocation(this.request.path, this.request.query);
     const store = configureStore();
 
     const sliceID = parseInt(this.request.path.split('/').find(x => x.match(/^[0-9]+$/)));

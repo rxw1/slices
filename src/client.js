@@ -4,10 +4,13 @@ global.__SERVER__ = false;
 import 'babel-core/polyfill';
 
 import React from 'react';
-import { history } from 'react-router/lib/BrowserHistory';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import routes from './routes';
+
+import { createHistory } from 'history';
+var history = createHistory();
+
 
 // React components for Redux DevTools
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
