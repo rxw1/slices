@@ -62,7 +62,6 @@ export function getSlices (sliceIDs, slices = []) {
 // insert slice into database
 export function insertSlice (slice) {
   return function* () {
-    console.log(slice);
     const exists = yield r.table('slices').getAll(slice.sliceID).count()
     if (!exists) {
       return yield r.table('slices').insert(slice);
@@ -169,7 +168,6 @@ router
     yield setup();
   })
   .get('/search/:word', function* () {
-    console.log('search', this.params.word);
     this.body = yield searchSlices(this.params.word);
   })
   .get('/sample/:amount?', function* () {
