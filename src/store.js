@@ -12,36 +12,33 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
-
-let middleware = [];
-let enhancers = [];
-
-// Async
 import thunk from 'redux-thunk';
-middleware.push(thunk);
+
+let clientMiddleware = [];
+let clientEnhancers = [];
 
 // Client only
 if (global.hasOwnProperty('window')) {
 
 	// Logger
 	import createLogger from 'redux-logger';
-	middleware.push(createLogger({
+	clientMiddleware.push(createLogger({
 		level: 'info',
 		collapsed: true
 	}))
 
 	// Devtools
 	import { devTools, persistState } from 'redux-devtools';
-	enhancers.push(devTools());
-	enhancers.push(persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)));
+	clientEnhancers.push(devTools());
+	clientEnhancers.push(persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)));
   // persistState lets you write ?debug_session=<name> in address bar to
   // persist debug sessions
 }
 
 export default initialState => {
 	const store = compose(
-		applyMiddleware(...middleware),
-		...enhancers,
+		applyMiddleware(thunk, ...clientMiddleware),
+		...clientEnhancers,
 	)(createStore)(reducers, initialState);
 
 	if (module.hot) {
