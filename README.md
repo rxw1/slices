@@ -1,4 +1,4 @@
-### A browser for sliced Haskell slices
+### A browser for sliced Haskell fragments
 
 Showcase project utilizing [Redux](https://github.com/rackt/redux), [Redux DevTools](https://github.com/gaearon/redux-devtools), [React](https://github.com/facebook/react), [React Router](https://github.com/rackt/react-router), [RethinkDB](http://rethinkdb.com), [ElasticSearch](https://www.elastic.co), universal/server side rendering using [Koa](https://github.com/koajs/koa) and [Material Design Lite](http://www.getmdl.io/components/index.html). It's written in [ES7](http://kangax.github.io/compat-table/es7/), compiled by [Babel](https://babeljs.io/) and the front end is served via [WebPack](https://webpack.github.io/). Originally based on [khtdr's redux-react-koa-isomorphic-counter-example](https://github.com/khtdr/redux-react-koa-isomorphic-counter-example) and the [official Redux examples](https://github.com/rackt/redux/tree/master/examples). Questions, feedback and forks are welcome.
 
