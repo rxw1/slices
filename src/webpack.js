@@ -25,5 +25,5 @@ new WebpackDevServer(webpack(config), {
 }).listen(port, host, function (err) {
   if (err) console.log(err);
   const d = Date().split(' ');
-  console.log(`${[d[2], d[1], d[4]].join(' ')} - ${chalk.magenta('[webpack]', BASEURL)}`);
+  console.log(`${[d[2], d[1], d[4]].join(' ')} - ${chalk.blue('[webpack]', BASEURL)}`);
 });
