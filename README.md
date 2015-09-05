@@ -1,5 +1,8 @@
-### Work in progress. Not usable for work, just for play.
+### A browser for sliced Haskell slices
 
+Showcase project utilizing [Redux](https://github.com/rackt/redux), [Redux DevTools](https://github.com/gaearon/redux-devtools), [React](https://github.com/facebook/react), [React Router](https://github.com/rackt/react-router), [RethinkDB](http://rethinkdb.com), [ElasticSearch](https://www.elastic.co), universal/server side rendering using [Koa](https://github.com/koajs/koa) and [Material Design Lite](http://www.getmdl.io/components/index.html). It's written in [ES7](http://kangax.github.io/compat-table/es7/), compiled by [Babel](https://babeljs.io/) and the front end is served via [WebPack](https://webpack.github.io/). Originally based on [khtdr's redux-react-koa-isomorphic-counter-example](https://github.com/khtdr/redux-react-koa-isomorphic-counter-example) and the [official Redux examples](https://github.com/rackt/redux/tree/master/examples). Questions, feedback and forks are welcome.
+
+There are still some bugs to fix and some more tech I'd like to use or at least explore, like ImmutableJS, Rx.js, better ElasticSearch indexing, subscribing to RethinkDB updates and WebSockets, better and more complex routing and more. And the output files are still pretty big: 5.6 MB for `common.js` (third party library stuff, you know) and 1.5 MB for `app.js`. Anyways, the code is quite clean and up to date. That's a good thing.
 
 ![screen shot 2015-09-01 at 04 50 40](https://cloud.githubusercontent.com/assets/154026/9595130/30246fd6-5065-11e5-8903-cb3236957ac6.png)
 
@@ -94,16 +97,3 @@ for i in slices/*; do
   echo
 done
 ```
-
----
-
-* Redux + Redux Devtools
-* React + React Router
-* RethinkDB + Elasticsearch
-* Koa
-* Material Design Lite
-* ES7 w/ Babel
-* Webpack
-* Universal/Server side rendering
-
-This project is somehow based on [khtdr's Isomorphic port of the redux counter app](https://github.com/khtdr/redux-react-koa-isomorphic-counter-example) and the [official Redux examples](https://github.com/rackt/redux/tree/master/examples).
