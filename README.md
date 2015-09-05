@@ -45,23 +45,22 @@ mkdir public && cp -r node_modules/highlight.js/styles public
 
 If things went well, the client should be reachable at `localhost:3000/slices`. You can query the API on e.g. `localhost:3000/api/slices`. See [src/server/routes/slices.js](https://github.com/rwilhelm/slices/blob/master/src/server/routes/slices.js) for some of the available routes.
 
-* GET `api/slices/sample` get three random slices
-* GET `api/slices/sample/42`
-* GET `api/slices/1719479834788995000` get a slice and all its dependencies
-* GET `api/slices/1719479834788995000/refs` get references only
 
-* GET `api/slices/search/hexquad` query elasticsearch to return slices with matching fragments
+METHOD | ENDPOINT                                  | DESCRIPTION
+:----- | :---------------------------------------- | :-----------
+GET    | `api/slices/sample`                       | get random slices, defaults to 3
+GET    | `api/slices/sample/42`                    |
+GET    | `api/slices/1719479834788995000`          | get a slice and all its dependencies
+GET    | `api/slices/1719479834788995000/refs`     | get references only
+GET    | `api/slices/search/hexquad`               | query elasticsearch to return slices with matching fragments
+POST   | `api/slices/1719479834788995000/upvote`
+POST   | `api/slices/1719479834788995000/downvote`
+POST   | `api/slices/1719479834788995000/like`
+GET    | `api/slices/liked`                        | get all liked slices
+GET    | `api/slices/withReferences`               | get all slices w/ references
+GET    | `api/slices/withoutReferences`            | get all slices w/o references
+GET    | `api/slices/withInstances`                | get all liked w/ instances
 
-* POST `api/slices/1719479834788995000/upvote`
-* POST `api/slices/1719479834788995000/downvote`
-* POST `api/slices/1719479834788995000/like`
-
-* GET `api/slices/liked` get all liked slices
-* GET `api/slices/withReferences` get all slices w/ references
-* GET `api/slices/withoutReferences` get all slices w/o references
-* GET `api/slices/withInstances` get all liked w/ instances
-
----
 
 #### Zsh love
 
