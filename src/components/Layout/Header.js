@@ -44,8 +44,6 @@ export default class Header extends Component {
     }
   }
 
-  // as props should be checked before whatever is computed that is displayed
-  // in the upper right, ... we need this
   getName() {
     if (!this.props.slices.length) return 'no slices, sorry.';
     const selectedSliceID = this.props.selected[0];
@@ -55,18 +53,6 @@ export default class Header extends Component {
 
   render() {
     const { selected, slicesSample, clearSlices } = this.props;
-
-    // FIXME for now just get the first sliceID of the selection props array.
-    // instead it should be possible to select multiple slices. for that we
-    // should fetch multiple names in the header and display the selected
-    // slice(s) in a more prominent way.
-
-    const homeButton = () => {
-      <button className="mdl-button mdl-js-button mdl-button--icon">
-        <i className="material-icons">home</i>
-      </button>
-    }
-
     return (
       <header className='mdl-layout__header' style={styles.main}>
         <div className='mdl-layout__header-row'>

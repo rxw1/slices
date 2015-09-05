@@ -19,9 +19,7 @@ export default class Layout extends Component {
     return (
       <div style={styles.layout} className='mdl-layout mdl-js-layout mdl-layout--fixed-header'>
         <Header {...other} />
-        <Content {...other}>
-          {children}
-        </Content>
+        <Content {...other} children={children} />
         <Drawer {...other} />
         <Footer {...other} />
       </div>

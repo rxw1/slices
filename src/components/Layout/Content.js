@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import StyleSheet from 'react-style';
+
 var styles = StyleSheet.create({
   main: {
     marginTop: '12px',
