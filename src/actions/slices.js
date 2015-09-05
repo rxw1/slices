@@ -17,7 +17,8 @@ import {
   UPVOTE,
   DOWNVOTE,
   CLEAR_SEARCH,
-  CLEAR_SELECT
+  CLEAR_SELECT,
+  REMOVE_SLICE
 } from './types';
 
 import { get, post } from '../fetch';
