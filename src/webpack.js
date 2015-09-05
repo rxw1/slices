@@ -1,10 +1,11 @@
 'use strict';
 
 import 'babel-core/polyfill';
-
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import config from '../webpack.config';
+
+import chalk from 'chalk';
 
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT) + 1 || 3001;
@@ -23,7 +24,6 @@ new WebpackDevServer(webpack(config), {
   quiet: true
 }).listen(port, host, function (err) {
   if (err) console.log(err);
-  import chalk from 'chalk';
   const d = Date().split(' ');
-console.log(`${[d[2], d[1], d[4]].join(' ')} - ${chalk.magenta('[webpack]', BASEURL)}`);
+  console.log(`${[d[2], d[1], d[4]].join(' ')} - ${chalk.magenta('[webpack]', BASEURL)}`);
 });

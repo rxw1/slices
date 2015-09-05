@@ -14,6 +14,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 
+import createLogger from 'redux-logger';
+import { devTools, persistState } from 'redux-devtools';
+
 let clientMiddleware = [];
 let clientEnhancers = [];
 
@@ -21,14 +24,12 @@ let clientEnhancers = [];
 if (global.hasOwnProperty('window')) {
 
 	// Logger
-	import createLogger from 'redux-logger';
 	clientMiddleware.push(createLogger({
 		level: 'info',
 		collapsed: true
 	}))
 
 	// Devtools
-	import { devTools, persistState } from 'redux-devtools';
 	clientEnhancers.push(devTools());
 	clientEnhancers.push(persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)));
   // persistState lets you write ?debug_session=<name> in address bar to
@@ -38,7 +39,7 @@ if (global.hasOwnProperty('window')) {
 export default initialState => {
 	const store = compose(
 		applyMiddleware(thunk, ...clientMiddleware),
-		...clientEnhancers,
+		...clientEnhancers
 	)(createStore)(reducers, initialState);
 
 	if (module.hot) {
