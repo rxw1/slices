@@ -92,15 +92,7 @@ function receiveSlicesUpdate(payload) {
   };
 }
 
-// => reducer caring about selected slices
-function selectSlice(sliceID) {
-  return {
-    type: SELECT_SLICE,
-    sliceID
-  };
-}
-
-// exported API functions a.k.a. action creators (I guess)
+// select, unselect, add, remove
 
 export function select(sliceID) {
   return dispatch => {
@@ -109,6 +101,21 @@ export function select(sliceID) {
     return get(`/api/slices/${sliceID}/refs`)
       .then(result => dispatch(receiveReferences(result)));
   }
+}
+
+function selectSlice(sliceID) {
+  return {
+    type: SELECT_SLICE,
+    sliceID
+  };
+}
+
+// removes slice from client
+export function removeSlice(sliceID) {
+  return {
+    type: REMOVE_SLICE,
+    sliceID
+  };
 }
 
 // request some slices
@@ -225,6 +232,12 @@ export function download(sliceID) {
     dispatch(downloadSlice(sliceID));
     return get(`/api/slices/${sliceID}/download`)
       .then(result => dispatch(receiveTarball(result)));
+  }
+}
+
+export function downloadSlice() {
+  return {
+    type: DOWNLOAD_SLICE
   }
 }
 
