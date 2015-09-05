@@ -37,7 +37,7 @@ find slices -type f | while read -r slice; do
 done
 ```
 
-##### Copy some stylesheets around (sorry!)
+##### Copy some stylesheets around (sorry! will fix that)
 
 ```shell
 mkdir public && cp -r node_modules/highlight.js/styles public
