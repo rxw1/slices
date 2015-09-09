@@ -12,7 +12,7 @@ let router = new Router({
 
 import 'isomorphic-fetch';
 
-import _ from 'lodash';
+import { chain, pluck, flatten, filter, difference, value, uniq, remove } from 'lodash';
 
 import setup from '../middleware/database-setup';
 
@@ -38,7 +38,7 @@ export function getSlices (sliceIDs, slices = []) {
 
     slices.push(...result);
 
-    let refIDs = _.chain(result)
+    let refIDs = chain(result)
       .pluck('uses')
       .flatten()
       .pluck('reference.otherSlice')
@@ -55,7 +55,7 @@ export function getSlices (sliceIDs, slices = []) {
     // on every sliceID and never fetch anything we already have? Afaict there
     // are rarely more than 1-2 duplicates per run.
 
-    return _.uniq(slices, 'sliceID');
+    return uniq(slices, 'sliceID');
   }
 }
 
@@ -97,7 +97,7 @@ export function getReferences (sliceIDs) {
   return function* () {
     let slices = yield getSlices(parseInt(this.params.sliceID))
     // TODO avoid getting duplicates
-    _.remove(slices, {sliceID: parseInt(this.params.sliceID)});
+    remove(slices, {sliceID: parseInt(this.params.sliceID)});
     return slices;
   }
 }

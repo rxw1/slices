@@ -15,8 +15,7 @@ import {
   SELECT_SLICE
 } from '../actions/types';
 
-import uniq from 'lodash/array/uniq';
-import findIndex from 'lodash/array/findIndex';
+import { uniq, findIndex } from 'lodash';
 
 export function slices(state = [], action) {
   switch (action.type) {

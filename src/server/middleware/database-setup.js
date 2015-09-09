@@ -1,4 +1,4 @@
-let _ = require('lodash');
+import { contains, difference, map, each } from 'lodash';
 
 const config = {
   db: 'fragnix',
@@ -17,23 +17,23 @@ export default function () {
     try {
 
       // drop database if it already exists
-      if (_.contains(yield r.dbList(), config.db)) {
+      if (contains(yield r.dbList(), config.db)) {
         yield r.dbDrop(config.db);
         console.log(`dropped database: ${config.db}`);
       }
 
       // drop database if it already exists
-      if (!_.contains(yield r.dbList(), config.db)) {
+      if (!contains(yield r.dbList(), config.db)) {
         yield r.dbCreate(config.db);
         console.log(`created database: ${config.db}`);
       }
 
       // get missing tables
-      let missingTables = _.difference(config.tables,
+      let missingTables = difference(config.tables,
         yield r.tableList());
 
       // create missing tables
-      yield _.map(missingTables, function(table) {
+      yield map(missingTables, function(table) {
         return r.tableCreate(table, {
           primaryKey: 'sliceID'
         });
@@ -42,8 +42,8 @@ export default function () {
 
       // create secondary indices
       let secondaryIndices = [];
-      _.each(sidx, function(values, key) {
-        _.each(values).map(function(value) {
+      each(sidx, function(values, key) {
+        each(values).map(function(value) {
           secondaryIndices.push(r.table(key).indexCreate(value));
           console.log(`created secondary index on ${key}: ${value}`);
           // secondaryIndices.push(r.table(key).indexWait(value));

@@ -7,7 +7,7 @@ import * as actions from '../actions/slices';
 import Card from '../components/Layout/Card';
 import Fragment from '../components/Fragment';
 
-import _ from 'lodash';
+import { find, findIndex } from 'lodash';
 
 export default class Slices extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class Slices extends Component {
       return (searched.length ? searched : selected.length ? selected : all || []).map(slice => {
         const { sliceID, fragment } = slice; // FIXME sliceID undefined when clearing before unselecting
         return (
-          <Card key={sliceID} {...slice} {...other} isSelected={!_.findIndex(selected, {sliceID: sliceID})}>
+          <Card key={sliceID} {...slice} {...other} isSelected={!findIndex(selected, {sliceID: sliceID})}>
             <Fragment fragment={fragment} />
           </Card>
         );
@@ -48,8 +48,8 @@ function mapStateToProps(state) {
     all: state.slices,
     searched: state.searched,
     selected: state.selected ? [
-      ...state.selected.map(sliceID => _.find(state.slices, {sliceID: sliceID})),
-      ...state.references.map(sliceID => _.find(state.slices, {sliceID: sliceID}))
+      ...state.selected.map(sliceID => find(state.slices, {sliceID: sliceID})),
+      ...state.references.map(sliceID => find(state.slices, {sliceID: sliceID}))
     ] : undefined
   };
 }

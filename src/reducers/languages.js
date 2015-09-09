@@ -2,8 +2,7 @@ import {
 	RECEIVE_LANGUAGES
 } from '../actions/types';
 
-import uniq from 'lodash/array/uniq';
-import sort from 'lodash/collection/sortBy';
+import { uniq, sort } from 'lodash';
 
 export function languages (state = [], action) {
   switch (action.type) {

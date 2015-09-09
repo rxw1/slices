@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import StyleSheet from 'react-style';
-import find from 'lodash/collection/find';
+import { find } from 'lodash';
 
 var styles = StyleSheet.create({
   main: {

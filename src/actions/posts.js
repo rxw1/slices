@@ -3,6 +3,8 @@ import {
   POST_RESPONSE
 } from './types';
 
+import { get, post } from '../fetch';
+
 function postSubmit(data) {
   return {
     type: POST_SUBMIT,
