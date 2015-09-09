@@ -3,6 +3,13 @@ import React, { PropTypes, Component } from 'react';
 export default class Drawer extends Component {
   constructor(props) {
     super(props);
+    this.go = this.go.bind(this);
+  }
+
+  go(target) {
+    if (global.hasOwnProperty('window')) {
+      this.context.router.transitionTo(target);
+    }
   }
 
   render() {
@@ -11,6 +18,13 @@ export default class Drawer extends Component {
     return (
       <div className='mdl-layout__drawer'>
         <span className='mdl-layout-title'>Slices</span>
+        <span className='mdl-layout-title'>Navigation</span>
+        <nav className='mdl-navigation'>
+          <a className='mdl-navigation__link' onClick={this.go.bind(null, '/slices')}>
+            Slices
+          </a>
+        </nav>
+        <span className='mdl-layout-title'>Stored Resources</span>
         <nav className='mdl-navigation'>
           <a className='mdl-navigation__link' onClick={likedSlices}>
             Liked Slices
@@ -26,6 +40,10 @@ export default class Drawer extends Component {
     );
   }
 }
+
+Drawer.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 Drawer.propTypes = {
   likedSlices: PropTypes.func.isRequired,
