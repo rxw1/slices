@@ -1,8 +1,6 @@
 import {
   POST_SUBMIT,
-  POST_RESPONSE,
-  RECEIVE_POSTS,
-  REQUEST_POSTS
+  POST_RESPONSE
 } from './types';
 
 import { get, post } from '../fetch';
@@ -14,24 +12,10 @@ function postSubmit(data) {
   };
 }
 
-function postResponse(payload) {
+function postResponse(data) {
   return {
     type: POST_RESPONSE,
-    payload: payload.changes.map(x => x.new_val)
-  };
-}
-
-function receivePosts(payload) {
-  return {
-    type: RECEIVE_POSTS,
-    payload
-  };
-}
-
-function requestPosts(postID) {
-  return {
-    type: REQUEST_POSTS,
-    postID
+    data: data.changes.map(x => x.new_val)
   };
 }
 
@@ -44,17 +28,9 @@ export function sendFormData(data) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({data})
+      body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(json => dispatch(postResponse(json)));
-  }
-}
-
-export function getAllPosts() {
-  return dispatch => {
-    dispatch(requestPosts());
-    return get(`/api/posts`)
-      .then(result => dispatch(receivePosts(result)));
   }
 }

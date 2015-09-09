@@ -13,23 +13,15 @@ export default class Drawer extends Component {
   }
 
   render() {
-    const { likedSlices, slicesWithInstances, getAllSlices, getAllPosts } = this.props;
+    const { likedSlices, slicesWithInstances, getAllSlices } = this.props;
 
     return (
       <div className='mdl-layout__drawer'>
+        <span className='mdl-layout-title'>Slices</span>
         <span className='mdl-layout-title'>Navigation</span>
         <nav className='mdl-navigation'>
           <a className='mdl-navigation__link' onClick={this.go.bind(null, '/slices')}>
             Slices
-          </a>
-          <a className='mdl-navigation__link' onClick={this.go.bind(null, '/form')}>
-            Form1
-          </a>
-          <a className='mdl-navigation__link' onClick={this.go.bind(null, '/form2')}>
-            Form2
-          </a>
-          <a className='mdl-navigation__link' onClick={this.go.bind(null, '/demo')}>
-            Demo
           </a>
         </nav>
         <span className='mdl-layout-title'>Stored Resources</span>
@@ -42,9 +34,6 @@ export default class Drawer extends Component {
           </a>
           <a className='mdl-navigation__link' onClick={getAllSlices}>
             All Slices
-          </a>
-          <a className='mdl-navigation__link' onClick={getAllPosts}>
-            All Posts
           </a>
         </nav>
       </div>
