@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import StyleSheet from 'react-style';
 var styles = StyleSheet.create({
   footer: {
-    padding: '16px',
+    padding: '16px'
   }
 });
 

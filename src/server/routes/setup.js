@@ -24,14 +24,14 @@ export function elasticSearch () {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "type": "rethinkdb",
-        "rethinkdb": {
-          "host": "localhost",
-          "port": 28015,
-          "databases": {
-            "fragnix": {
-              "slices": {
-                "backfill": true
+        type: 'rethinkdb',
+        rethinkdb: {
+          host: 'localhost',
+          port: 28015,
+          databases: {
+            fragnix: {
+              slices: {
+                backfill: true
               }
             }
           }

@@ -17,9 +17,7 @@ class App extends Component {
     const value = pathname.substring(1);
 
     return (
-      <Layout value={value} {...other}>
-        {children}
-      </Layout>
+      <Layout value={value} children={children} {...other} />
     );
   }
 }
@@ -35,8 +33,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  // FIXME do children have all neccessary action-functions available?
-  return bindActionCreators({...SlicesActions, ...PostsActions}, dispatch);
+  return bindActionCreators({
+    ...SlicesActions,
+    ...PostsActions
+  }, dispatch);
 }
 
 export default connect(
