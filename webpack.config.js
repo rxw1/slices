@@ -36,7 +36,6 @@ module.exports = {
       'redux',
       'redux-devtools',
       'redux-form',
-      'redux-immutable',
       'redux-logger',
       'redux-thunk',
       'sass'
