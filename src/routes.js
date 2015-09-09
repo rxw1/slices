@@ -4,12 +4,14 @@ import App from './containers/App';
 import Slices from './components/Slices';
 import SliceView from './components/SliceView';
 import TestForm from './components/TestForm';
+import TestForm2 from './components/TestForm2';
 
 export default (
 	<Route path='/' component={App}>
 		<Route path='slices' component={Slices} />
 		<Route path='slices/:sliceID' component={SliceView} />
 		<Route path='form' component={TestForm} />
+		<Route path='form2' component={TestForm2} />
 		<Redirect from='/' to='slices' />
 	</Route>
 )

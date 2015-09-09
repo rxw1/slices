@@ -6,22 +6,29 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/posts';
 
-import Input from './Input';
-
 var styles = StyleSheet.create({
-  postBox: {
-  },
-  posts: {
-    width: '90%',
+  textarea: {
+    width: '100%',
+    // height: '200px',
     fontSize: '1.1em',
     padding: '12px',
+    // margin: '12px',
+    border: 'none',
+    outline: 'none',
     fontFamily: 'Hack',
-    margin: '12px 24px',
-    border: '1px solid #333',
+    resize: 'none',
+  },
+  submitButton: {
+    fontFamily: 'Hack',
+    float: 'right'
+  },
+  inputBox: {
+    position: 'relative',
+    padding: '12px'
   }
 });
 
-export default class TestForm extends Component {
+export default class Input extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -49,23 +56,23 @@ export default class TestForm extends Component {
   render() {
     return (
       <div className="mdl-grid">
-        <div style={styles.postBox} className="mdl-cell mdl-cell--12-col">
-          {this.props.posts.map(post => {
-            return <pre style={styles.posts}>{post.data}</pre>;
-          })}
+        <div style={styles.inputBox} className="mdl-cell mdl-cell--12-col">
+          <form onSubmit={this.onSubmit}>
+            <textarea style={styles.textarea} value={this.state.text} onChange={this.handleChange} /><br />
+            <button style={styles.submitButton} className="mdl-button mdl-js-button mdl-js-ripple-effect">Submit</button>
+          </form>
         </div>
-        <Input />
       </div>
     );
   }
 }
 
-TestForm.propTypes = {
+Input.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
 
-TestForm.contextTypes = {
+Input.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
@@ -82,4 +89,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TestForm);
+)(Input);
